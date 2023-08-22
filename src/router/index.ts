@@ -1,26 +1,78 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import { useStorage } from "vue3-storage-secure";
+import { nextTick } from 'vue'
+import { APP_NAMES } from '@/plugins/dictionary';
+
+const DEFAULT_TITLE = APP_NAMES.capitalize;
 
 const routes = [
+  // ? Default routes
   {
     path: '/',
-    component: () => import('@/layouts/default/Default.vue'),
+    component: () => import('@/layouts/default-layout.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
         name: 'Home',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        component: () => import('@/pages/home.vue'),
+        meta: { head: `Home - ${DEFAULT_TITLE}` }
+      },
+    ],
+  },
+
+  // ? Authentication routes
+  {
+    path: '/auth',
+    component: () => import('@/layouts/auth-layout.vue'),
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/pages/login.vue'),
+        meta: { head: `Login - ${DEFAULT_TITLE}` }
+      },
+      {
+        path: "/:pathMatch(.*)*",
+        name: "Error",
+        component: () => import('@/pages/error.vue'),
+        meta: { head: `Error - ${DEFAULT_TITLE}` }
       },
     ],
   },
 ]
 
 const router = createRouter({
+  // mode: 'history',
   history: createWebHistory(process.env.BASE_URL),
+  // base: process.env.BASE_URL,
   routes,
 })
+
+
+router.beforeEach((to, from, next) => {
+  // does not require auth, make sure to always call next()!
+  if (!to.matched.some(record => record.meta.requiresAuth)) return next()
+
+  const tokenAuth = useStorage()?.getStorageSync("tokenAuth")
+
+  // go to wherever I'm going
+  if (tokenAuth) return next()
+
+  // this route requires auth, check if logged in
+  // if not, redirect to login page.
+  next({ name: 'Login' })
+})
+
+
+router.afterEach((to, /* from */) => {
+  // Use next tick to handle router history correctly
+  // see: https://github.com/vuejs/vue-router/issues/914#issuecomment-384477609
+  nextTick(() => {
+    if (to.meta.head) document.title = to.meta.head.toString();
+    else document.title = DEFAULT_TITLE;
+  });
+});
 
 export default router

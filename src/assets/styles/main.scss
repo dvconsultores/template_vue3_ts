@@ -1,0 +1,13 @@
+@forward "./config/variables";
+@forward "./config/fonts";
+@forward "./config/typography";
+@forward "./config/mixins";
+@forward "./config/custom-mixins";
+@forward "./config/animations";
+@forward "./config/responsive";
+@use "./config/mixins" as *;
+@use "./config/variables" as *;
+
+
+//===================================== global ======================================//
+
