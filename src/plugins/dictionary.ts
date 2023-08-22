@@ -1,8 +1,8 @@
 export const APP_NAMES = {
-  camelcase: 'vue3Detextre4',
-  kedabcase: 'vue3-detextre4',
-  snakecase: 'vue3_detextre4',
-  capitalize: 'Vue3 Detextre4',
+  camelcase: 'vue3TsDetextre4',
+  kedabcase: 'vue3-ts-detextre4',
+  snakecase: 'vue3_ts_detextre4',
+  capitalize: 'Vue3 TS Detextre4',
   values: () => Object.values(APP_NAMES),
 }
 
