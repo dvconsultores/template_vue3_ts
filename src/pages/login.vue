@@ -2,18 +2,21 @@
   <section id="login">
     <img src="@/assets/sources/logos/logo.svg" style="width: min(450px, 100%)">
 
-    <v-form ref="form">
+    <v-form v-model="validForm">
       <v-text-field
         v-model="dataLogin.email"
         variant="solo"
         placeholder="Correo electronico"
         append-inner-icon="mdi-email"
         :rules="globalRules.email"
-        @keydown="e => e.key === 'Enter' ? $refs.password.focus() : null"
+        @keydown="(e: any) => {
+          if (e.key !== 'Enter') return
+          elPassword?.focus()
+        }"
       ></v-text-field>
 
       <v-text-field
-        ref="password"
+        id="password"
         v-model="dataLogin.password" solo
         variant="solo"
         placeholder="Contraseña"
@@ -21,7 +24,10 @@
         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
         :rules="rules.password"
         @click:appendInner="showPassword = !showPassword"
-        @keydown="e => e.key === 'Enter' ? handleLogin() : null"
+        @keydown="(e: any) => {
+          if (e.key !== 'Enter') return
+          handleLogin()
+        }"
       ></v-text-field>
 
       <div class="flex-space-center">
@@ -52,66 +58,77 @@
   </section>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import '@/assets/styles/pages/login.scss'
-import { ref } from 'vue'
+import computeds from '@/mixins/computeds';
+import { onMounted } from 'vue';
+import { createApp, onBeforeMount, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useToast } from "vue-toastification";
+import { useStorage } from 'vue3-storage-secure';
 const toast = useToast();
+const storage = useStorage()
+const router = useRouter()
 
-export default {
+const { data } = computeds
+const globalRules = data().globalRules
+
+createApp({
   name: "LoginPage",
   layout: "auth-layout",
-  setup() {
-    return {
-      isLoading: ref(false),
-      rememberMe: ref(false),
-      showPassword: ref(false),
-      dataLogin: ref({
-        email: undefined,
-        password: undefined,
-      }),
-      rules: {
-        password: [
-          (v: string) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{6,}$/.test(v)
-            || 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial',
-        ]
-      },
-    }
-  },
-  created() {
-    const storage = this.$storage
+})
 
-    if (storage.getStorageSync("tokenAuth"))
-      storage.removeStorageSync("tokenAuth")
+const
+  validForm = ref(false),
+  elPassword = ref<HTMLElement|null>(null),
+  isLoading = ref(false),
+  rememberMe = ref(false),
+  showPassword = ref(false),
+  dataLogin = ref({
+    email: undefined,
+    password: undefined,
+  }),
+  rules = {
+    password: [
+      (v: string) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{6,}$/.test(v)
+        || 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial',
+    ]
+  };
 
-    const rmEmail = storage.getStorageSync('rmEmail')
-    if (rmEmail) {
-      this.dataLogin.email = rmEmail
-      this.rememberMe = true
-    }
-  },
-  methods: {
-    async handleLogin() {
-      const validate = await this.$refs.form.validate()
-      if (!validate.valid) return
+onBeforeMount(() => {
+  if (storage?.getStorageSync("tokenAuth"))
+    storage.removeStorageSync("tokenAuth")
 
-      this.isLoading = true
-
-      const data = await new Promise((resolve) => {
-        setTimeout(() => resolve("authorizationToken"), 2000);
-      })
-
-      if (!this.rememberMe) this.$storage.removeStorageSync('rmEmail')
-      else this.$storage.setStorageSync('rmEmail', this.dataLogin.email)
-
-      this.$storage.setStorageSync('tokenAuth', data)
-
-      toast.success('Sign in successful!')
-      this.$router.push('/')
-    },
-    handleRegister() {
-      this.$router.push('/register')
-    },
+  const rmEmail = storage?.getStorageSync('rmEmail')
+  if (rmEmail) {
+    dataLogin.value.email = rmEmail
+    rememberMe.value = true
   }
-}
+})
+
+onMounted(() => {
+  elPassword.value = document.getElementById('password')
+})
+
+async function handleLogin() {
+    if (!validForm.value) return
+
+    isLoading.value = true
+
+    const data = await new Promise((resolve) => {
+      setTimeout(() => resolve("authorizationToken"), 2000);
+    })
+
+    if (!rememberMe.value) storage?.removeStorageSync('rmEmail')
+    else storage?.setStorageSync('rmEmail', dataLogin.value.email)
+
+    storage?.setStorageSync('tokenAuth', data)
+
+    toast.success('Sign in successful!')
+    router.push('/')
+  }
+
+  function handleRegister() {
+    router.push('/register')
+  }
 </script>

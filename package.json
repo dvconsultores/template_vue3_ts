@@ -8,7 +8,11 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.79",
     "@mdi/font": "7.0.96",
+    "@vueuse/core": "^10.3.0",
+    "apexcharts": "^3.41.1",
+    "axios": "^1.4.0",
     "firebase": "^10.2.0",
     "near-api-js": "^2.1.4",
     "roboto-fontface": "*",
