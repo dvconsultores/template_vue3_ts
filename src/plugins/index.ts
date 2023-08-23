@@ -3,9 +3,10 @@
  *
  * Automatically included in `./src/main.ts`
  */
+
 // Plugins
 import Vue3Storage from './vue3-storage-secure'
-// import polyfills from './polyfills'
+import polyfills from './polyfills'
 import injects from './injects'
 import axiosConfig from './axios'
 import directives from './directives'
@@ -31,7 +32,7 @@ import type { App } from 'vue'
 export function registerPlugins(app: App) {
   // Use principals
   Vue3Storage(app)
-  // polyfills()
+  polyfills()
   injects(app)
   axiosConfig(app)
   directives(app)

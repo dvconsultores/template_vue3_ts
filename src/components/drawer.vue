@@ -95,7 +95,7 @@ function logOut() {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 #drawer {
   background-image: linear-gradient(#0b3f6b, #2a8ada);
 

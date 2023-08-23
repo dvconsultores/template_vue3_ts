@@ -1,6 +1,6 @@
 export default {
   methods: {
-    customeDrag(event) {
+    customeDrag(event: any) {
       // select target
       const target = event.currentTarget;
       // set initial state
@@ -13,7 +13,7 @@ export default {
       ];
       if (window.innerWidth <= 880) document.documentElement.style.overflow = "hidden"
       
-      function typeEvent(event) {
+      function typeEvent(event: any) {
         if (event.type.includes('mouse')) {
           return event
         } else if (event.type.includes('touch')) {
@@ -21,13 +21,13 @@ export default {
         }
       }
       
-      const onMove = (e) => {
+      const onMove = (e: any) => {
         const
           container = document.getElementById("home"),
           positionY = typeEvent(e).clientY + offset[0],
           positionX = typeEvent(e).clientX + offset[1],
-          rangeYStart = 0, rangeYEnd = container.getBoundingClientRect().height - target.getBoundingClientRect().height,
-          rangeXStart = 0, rangeXEnd = container.getBoundingClientRect().width - target.getBoundingClientRect().width;
+          rangeYStart = 0, rangeYEnd = container!.getBoundingClientRect().height - target.getBoundingClientRect().height,
+          rangeXStart = 0, rangeXEnd = container!.getBoundingClientRect().width - target.getBoundingClientRect().width;
 
         if (e.type.includes('mouse')) e.preventDefault();
         if (isDown && positionY > rangeYStart && positionY < rangeYEnd) {
@@ -59,7 +59,7 @@ export default {
       window.ontouchmove = e => onMove(e)
     },
     
-    customeDragOnly(event, {range, dir} = {range: undefined, dir: "vertical"}) {
+    customeDragOnly(event: any, {range, dir} : {range: null|number, dir: string} = {range: null, dir: "vertical"}) {
       // set default range
       if (!range && dir === "vertical") range = 100
       else if (!range && dir === "horizontal") range = 20
@@ -75,7 +75,7 @@ export default {
         target.offsetLeft - typeEvent(event).clientX
       ];
       
-      function typeEvent(event) {
+      function typeEvent(event: any) {
         if (event.type.includes('mouse')) {
           return event
         } else if (event.type.includes('touch')) {
@@ -83,19 +83,19 @@ export default {
         }
       }
       
-      const onMove = (e) => {
+      const onMove = (e: any) => {
         const
           positionY = typeEvent(e).clientY + offset[0],
           positionX = typeEvent(e).clientX + offset[1];
         
         if (e.type.includes('mouse')) e.preventDefault();
         if (
-          isDown && positionY > range
-          && positionY < window.innerHeight - (range + 80)
+          isDown && positionY > range!
+          && positionY < window.innerHeight - (range! + 80)
           && dir === "vertical"
         ) target.style.top  = `${positionY}px`;
         if (
-          isDown && positionX > range
+          isDown && positionX > range!
           && positionX < window.innerWidth - (range + typeEvent(e).target.getBoundingClientRect().width + 30)
           && dir === "horizontal"
         ) target.style.left  = `${positionX}px`;

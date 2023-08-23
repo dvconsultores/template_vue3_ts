@@ -33,14 +33,14 @@
   </v-img>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineProps({
   src: String,
   alt: String,
   aspectRatio: Number,
   contentClass: String,
   cover: Boolean,
-  eager: String,
+  eager: Boolean,
   gradient: String,
   height: String,
   maxHeight: String,
