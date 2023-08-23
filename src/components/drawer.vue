@@ -2,11 +2,11 @@
   <v-navigation-drawer
     id="drawer"
     v-model="store.state.drawer"
-    :permanent="!isMobile"
+    :permanent="!mobile"
     class="py-8 px-2"
   >
     <v-list nav>
-      <div v-if="isMobile" class="flex-jstart" style="gap: 10px">
+      <div v-if="mobile" class="flex-jstart" style="gap: 10px">
         <v-btn icon elevation="0" size="30">
           <v-icon size="20">mdi-cog-outline</v-icon>
         </v-btn>
@@ -26,7 +26,7 @@
       <v-list-item
         v-for="(item, i) in data" :key="i"
         :title="item.name"
-        @click="item.to ? $router.push(item.to) : null"
+        @click="item.to ? router.push(item.to) : null"
         class="text-white"
       >
         <template #prepend>
@@ -58,36 +58,36 @@
 
 <script setup lang="ts">
 import { createApp } from 'vue'
-import { useRouter, RouteLocationRaw } from 'vue-router'
 import { useStore } from 'vuex'
+import { useRouter, RouteLocationRaw } from 'vue-router'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
-
-const router = useRouter()
-const isMobile = useDisplay().mobile
-
-const store = useStore()
+const
+  router = useRouter(),
+  store = useStore(),
+  { mobile } = useDisplay()
 
 createApp({
   name: "DrawerComponent",
 })
 
-const data: {icon: string, name: string, to: RouteLocationRaw | null}[] = [
-  {
-    icon: "mdi-currency-usd",
-    name: "Mi perfil",
-    to: "/profile"
-  },
-  {
-    icon: "mdi-home-outline",
-    name: "Dashboard",
-    to: "/"
-  },
-  {
-    icon: "mdi-file-document-outline",
-    name: "Mis casos",
-    to: null
-  },
-]
+const
+  data: {icon: string, name: string, to: RouteLocationRaw|null}[] = [
+    {
+      icon: "mdi-currency-usd",
+      name: "Mi perfil",
+      to: "/profile"
+    },
+    {
+      icon: "mdi-home-outline",
+      name: "Dashboard",
+      to: "/"
+    },
+    {
+      icon: "mdi-file-document-outline",
+      name: "Mis casos",
+      to: null
+    },
+  ]
 
 
 function logOut() {
