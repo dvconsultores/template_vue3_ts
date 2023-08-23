@@ -123,7 +123,7 @@
   &[class*="-spaceb"] {justify-content: space-between}
   &[class*="-spacee"] {justify-content: space-evenly}
   &[class*="-space-center"] {align-items: center;justify-content: space-between}
-  &[class*="-column-center"] {flex-direction: column;}
+  &[class*="-column-"] {flex-direction: column}
 }
 
 .overscroll-auto {overscroll-behavior: auto}
