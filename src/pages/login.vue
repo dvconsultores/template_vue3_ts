@@ -131,4 +131,3 @@ async function handleLogin() {
     router.push('/register')
   }
 </script>
-@/mixins/variables
