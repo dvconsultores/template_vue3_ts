@@ -19,11 +19,15 @@
 
 <script setup lang="ts">
 import '@/assets/styles/pages/home.scss'
-import { createApp, ref } from 'vue';
+import { createApp, ref, onMounted } from 'vue';
 
 createApp({
   name: "HomePage",
 })
 
 const name = ref("detextre4")
+
+onMounted(() => {
+  console.log(`Hello ${name.value}!`);
+})
 </script>

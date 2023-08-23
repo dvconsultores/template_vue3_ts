@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import '@/assets/styles/pages/login.scss'
-import computeds from '@/mixins/computeds';
+import variables from '@/mixins/variables';
 import { onMounted } from 'vue';
 import { createApp, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -70,8 +70,7 @@ const toast = useToast();
 const storage = useStorage()
 const router = useRouter()
 
-const { data } = computeds
-const globalRules = data().globalRules
+const { globalRules } = variables
 
 createApp({
   name: "LoginPage",
@@ -132,3 +131,4 @@ async function handleLogin() {
     router.push('/register')
   }
 </script>
+@/mixins/variables
