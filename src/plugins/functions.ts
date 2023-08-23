@@ -1,6 +1,6 @@
 export function toCssVal(value: any, unit = 'px') {
   // helper
-  function setValue(val: string|number | number|string[], i: number|null) {
+  function setValue(val: string|number|Array<number|string>, i: number|null) {
     if (typeof val === 'string') return val
 
     const def = `${val}${unit}`
