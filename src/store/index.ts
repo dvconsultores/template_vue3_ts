@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 
+// TODO checkout for default store config
 const store = createStore({
   state: {
     user: {
@@ -11,15 +12,15 @@ const store = createStore({
     drawer: true,
   },
   mutations: {
-    setData(state, data) {
-      // MUTATE USER STATE
-    },
-    signIn(state, key) {
-      // LOG IN
-    },
-    signOut() {
-      // LOG OUT
-    },
+    // setData(state, data) {
+    //   // MUTATE USER STATE
+    // },
+    // signIn(state, key) {
+    //   // LOG IN
+    // },
+    // signOut() {
+    //   // LOG OUT
+    // },
     setDrawerState(state, value) {
       state.drawer = value
     }
@@ -37,16 +38,16 @@ const store = createStore({
     },
   },
   getters: {
-    pagination: () => ({items = [], currentPage = Number, itemsPerPage = Number, search = String, filterA = String}) => {
-      // let filters = [...items]
+    // pagination: () => ({items = [], currentPage = Number, itemsPerPage = Number, search = String, filterA = String}) => {
+    //   let filters = [...items]
   
-      // // search
-      // if (search) filters = filters.filter(data => data.name.includes(search))
-      // // filter A (tier)
-      // if (filterA) filters = filters.filter(data => data.tier === filterA)
+    //   // search
+    //   if (search) filters = filters.filter(data => data.name.includes(search))
+    //   // filter A (tier)
+    //   if (filterA) filters = filters.filter(data => data.tier === filterA)
   
-      // return filters.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-    }
+    //   return filters.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    // }
   },
   modules: {},
 })
