@@ -22,7 +22,8 @@ const routes = [
     ],
   },
 
-  // ? Authentication routes
+
+   // ? No Authenticated routes
   {
     path: '/auth',
     component: () => import('@/layouts/auth-layout.vue'),
