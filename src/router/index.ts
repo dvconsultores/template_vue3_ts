@@ -28,7 +28,7 @@ const routes = [
     component: () => import('@/layouts/auth-layout.vue'),
     children: [
       {
-        path: '/login',
+        path: 'login',
         name: 'Login',
         component: () => import('@/pages/login.vue'),
         meta: { head: `Login - ${DEFAULT_TITLE}` }
@@ -52,12 +52,15 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
+  if (to.path === '/') return next({ name: 'Home'})
+  else if (to.path === '/auth') return next({ name: 'Login' })
+
+
   // does not require auth, make sure to always call next()!
   if (!to.matched.some(record => record.meta.requiresAuth)) return next()
 
-  const tokenAuth = useStorage()?.getStorageSync("tokenAuth")
-
   // go to wherever I'm going
+  const tokenAuth = useStorage()?.getStorageSync("tokenAuth")
   if (tokenAuth) return next()
 
   // this route requires auth, check if logged in
