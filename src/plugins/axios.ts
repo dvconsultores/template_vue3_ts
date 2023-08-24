@@ -16,11 +16,10 @@ export default (app: App) => {
   axios.interceptors.request.use(
     config => {
       // set default header auth
-      const token = config.headers.Authorization
+      const configToken = config.headers.Authorization
       const tokenAuth = storage?.getStorageSync("tokenAuth")
-      if (!tokenAuth) storage?.setStorageSync('tokenAuth', token)
 
-      config.headers['Authorization'] = token || tokenAuth
+      if (tokenAuth && !configToken) config.headers['Authorization'] = `Token ${tokenAuth}`
       return config
     },
     error => Promise.reject(error)
