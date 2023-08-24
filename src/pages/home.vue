@@ -19,15 +19,16 @@
 
 <script setup lang="ts">
 import '@/assets/styles/pages/home.scss'
-import { createApp, ref, onMounted } from 'vue';
+import variables from '@/mixins/variables';
+import { ref, onMounted } from 'vue';
+const
+  { isLogged } = variables
 
-createApp({
-  name: "HomePage",
-})
 
-const name = ref("detextre4")
+const
+  name = ref("detextre4")
 
 onMounted(() => {
-  console.log(`Hello ${name.value}!`);
+  console.log(isLogged() ? 'logged in - ' : '', `welcome back ${name.value}`);
 })
 </script>

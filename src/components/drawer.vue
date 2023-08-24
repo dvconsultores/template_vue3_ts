@@ -57,7 +57,6 @@
 </template>
 
 <script setup lang="ts">
-import { createApp } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, RouteLocationRaw } from 'vue-router'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
@@ -66,9 +65,6 @@ const
   store = useStore(),
   { mobile } = useDisplay()
 
-createApp({
-  name: "DrawerComponent",
-})
 
 const
   data: {icon: string, name: string, to: RouteLocationRaw|null}[] = [
@@ -91,7 +87,7 @@ const
 
 
 function logOut() {
-  router.push('/login')
+  router.push('/auth')
 }
 </script>
 

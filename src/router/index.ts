@@ -23,7 +23,7 @@ const routes = [
   },
 
 
-   // ? No Authenticated routes
+  // ? No Authenticated routes
   {
     path: '/auth',
     component: () => import('@/layouts/auth-layout.vue'),
@@ -53,8 +53,7 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/') return next({ name: 'Home'})
-  else if (to.path === '/auth') return next({ name: 'Login' })
+  if (to.path === '/auth') return next({ name: 'Login' })
 
 
   // does not require auth, make sure to always call next()!

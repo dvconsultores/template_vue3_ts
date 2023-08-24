@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useStorage } from "vue3-storage-secure"
 import { useTheme } from "vuetify/lib/framework.mjs"
 import { useStore } from "vuex"
 
@@ -16,13 +17,13 @@ export default {
   },
 
   isLogged() {
-    return localStorage.getItem("tokenAuth")
+    return useStorage()?.getStorageSync('tokenAuth') ? true : false
   },
   user() {
     return useStore().state.user
   },
   appIsLaunched() {
-    return localStorage.getItem("appIsLaunched")
+    return useStorage()?.getStorageSync('appIsLaunched')
   },
   baseDomainPath() {
     return axios.defaults.baseURL

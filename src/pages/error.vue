@@ -11,7 +11,6 @@ import '@/assets/styles/pages/error.scss'
 import { createApp } from 'vue';
 
 createApp({
-  name: "ErrorPage",
   layout: 'auth-layout',
 })
 

@@ -27,3 +27,22 @@ export function toCssVal(value: any, unit = 'px') {
 
   return value
 }
+
+export async function getImageSize(file: any) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      const img = new Image();
+      img.onload = function() {
+        const width = img.width;
+        const height = img.height;
+        resolve({ width, height });
+      };
+      img.src = event.target?.result?.toString() ?? '';
+    };
+    reader.onerror = (error) => reject(error);
+
+    reader.readAsDataURL(file);
+  });
+}

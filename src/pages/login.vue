@@ -11,7 +11,7 @@
         :rules="globalRules.email"
         @keydown="(e: any) => {
           if (e.key !== 'Enter') return
-          elPassword?.focus()
+          passwordInput?.focus()
         }"
       ></v-text-field>
 
@@ -61,25 +61,22 @@
 <script setup lang="ts">
 import '@/assets/styles/pages/login.scss'
 import variables from '@/mixins/variables';
-import { onMounted } from 'vue';
-import { createApp, onBeforeMount, ref } from 'vue';
+import { createApp, onBeforeMount, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from "vue-toastification";
 import { useStorage } from 'vue3-storage-secure';
-const toast = useToast();
-const storage = useStorage()
-const router = useRouter()
-
-const { globalRules } = variables
+const
+  toast = useToast(),
+  storage = useStorage(),
+  router = useRouter(),
+  { globalRules } = variables
 
 createApp({
-  name: "LoginPage",
   layout: "auth-layout",
 })
 
 const
   validForm = ref(false),
-  elPassword = ref<HTMLElement|null>(null),
   isLoading = ref(false),
   rememberMe = ref(false),
   showPassword = ref(false),
@@ -94,6 +91,9 @@ const
     ]
   };
 
+const
+  passwordInput = computed(() => document.getElementById('password'))
+
 onBeforeMount(() => {
   if (storage?.getStorageSync("tokenAuth"))
     storage.removeStorageSync("tokenAuth")
@@ -105,9 +105,6 @@ onBeforeMount(() => {
   }
 })
 
-onMounted(() => {
-  elPassword.value = document.getElementById('password')
-})
 
 async function handleLogin() {
     if (!validForm.value) return
