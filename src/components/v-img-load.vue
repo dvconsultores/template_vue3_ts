@@ -60,7 +60,7 @@ defineProps({
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .v-img-load {
   .v-img__placeholder .v-skeleton-loader{
     border-radius: 50%;
