@@ -1,10 +1,11 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 
-import { VueFire, VueFireFirestoreOptionsAPI, VueFireOptions } from 'vuefire'
+import { VueFire, VueFireFirestoreOptionsAPI } from 'vuefire'
 
 // Types
 import type { App } from 'vue'
+import type { VueFireOptions } from 'vuefire'
 
 export const firebaseApp = initializeApp({
   // project configuration
@@ -18,15 +19,14 @@ export const firebaseApp = initializeApp({
 
 export const db = getFirestore(firebaseApp)
 
-//! UNDER TESTING
 export default (app: App) => {
   const options: VueFireOptions = {
-    firebaseApp: firebaseApp,
+    firebaseApp,
     modules: [
       VueFireFirestoreOptionsAPI({
         // this would be the same behavior as VueFire v2
-        // reset: true,
-        // wait: false,
+        reset: true,
+        wait: false,
       }),
     ],
   };

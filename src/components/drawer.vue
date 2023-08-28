@@ -3,6 +3,7 @@
     id="drawer"
     v-model="store.state.drawer"
     :permanent="!mobile"
+    :touchless="!mobile"
     class="py-8 px-2"
   >
     <v-list nav>
