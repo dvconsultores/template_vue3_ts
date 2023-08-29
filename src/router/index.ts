@@ -56,16 +56,14 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/auth') return next({ name: 'Login' })
 
 
-  // does not require auth, make sure to always call next()!
-  if (!to.matched.some(record => record.meta.requiresAuth)) return next()
-
-  // go to wherever I'm going
-  const tokenAuth = useStorage()?.getStorageSync("tokenAuth")
-  if (tokenAuth) return next()
-
   // this route requires auth, check if logged in
   // if not, redirect to login page.
-  next({ name: 'Login' })
+  const tokenAuth = useStorage()?.getStorageSync("tokenAuth")
+  if (to.matched.some(record => record.meta.requiresAuth) && !tokenAuth)
+    return next({ name: 'Login' })
+
+  // go to wherever I'm going
+  next()
 })
 
 
