@@ -15,6 +15,7 @@ export default {
       },
     ],
   },
+  isProduction: process.env.NODE_ENV === 'production',
 
   isLogged() {
     return useStorage()?.getStorageSync('tokenAuth') ? true : false
