@@ -8,12 +8,6 @@
 
 <script setup lang="ts">
 import '@/assets/styles/pages/error.scss'
-import { createApp } from 'vue';
-
-createApp({
-  layout: 'auth-layout',
-})
-
 defineProps({
   error: {
     type: Object,

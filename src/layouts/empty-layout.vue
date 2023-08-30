@@ -5,11 +5,3 @@
     </v-main>
   </v-app>
 </template>
-
-<script setup lang="ts">
-import { createApp } from 'vue'
-
-createApp({
-  name: "EmptyLayout",
-})
-</script>

@@ -22,11 +22,10 @@ import '@/assets/styles/pages/home.scss'
 import variables from '@/mixins/variables';
 import { ref, onMounted } from 'vue';
 const
-  { isLogged } = variables
+  { isLogged } = variables,
 
+name = ref("detextre4")
 
-const
-  name = ref("detextre4")
 
 onMounted(() => {
   console.log(isLogged() ? 'logged in - ' : '', `welcome back ${name.value}`);

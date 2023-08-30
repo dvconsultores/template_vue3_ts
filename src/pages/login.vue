@@ -16,7 +16,7 @@
       ></v-text-field>
 
       <v-text-field
-        id="password"
+        ref="passwordInput"
         v-model="dataLogin.password" solo
         variant="solo"
         placeholder="Contraseña"
@@ -45,7 +45,7 @@
 
       <v-btn
         class="my-2 bg-primary"
-        :disabled="isLoading"
+        :disabled="!validForm"
         :loading="isLoading"
         @click="handleLogin()"
       >Iniciar Sesión</v-btn>
@@ -61,7 +61,9 @@
 <script setup lang="ts">
 import '@/assets/styles/pages/login.scss'
 import variables from '@/mixins/variables';
-import { createApp, onBeforeMount, ref, computed } from 'vue';
+import AuthApi from '@/repository/auth_api';
+import { Ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from "vue-toastification";
 import { useStorage } from 'vue3-storage-secure';
@@ -69,30 +71,24 @@ const
   toast = useToast(),
   storage = useStorage(),
   router = useRouter(),
-  { globalRules } = variables
+  { globalRules } = variables,
 
-createApp({
-  layout: "auth-layout",
-})
+validForm = ref(false),
+isLoading = ref(false),
+rememberMe = ref(false),
+showPassword = ref(false),
+dataLogin = ref({
+  email: '',
+  password: '',
+}),
+rules = {
+  password: [
+    (v: string) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{6,}$/.test(v)
+      || 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial',
+  ]
+},
+passwordInput: Ref<HTMLElement|null> = ref(null)
 
-const
-  validForm = ref(false),
-  isLoading = ref(false),
-  rememberMe = ref(false),
-  showPassword = ref(false),
-  dataLogin = ref({
-    email: undefined,
-    password: undefined,
-  }),
-  rules = {
-    password: [
-      (v: string) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{6,}$/.test(v)
-        || 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial',
-    ]
-  };
-
-const
-  passwordInput = computed(() => document.getElementById('password'))
 
 onBeforeMount(() => {
   if (storage?.getStorageSync("tokenAuth"))
@@ -107,24 +103,20 @@ onBeforeMount(() => {
 
 
 async function handleLogin() {
-    if (!validForm.value) return
+  if (isLoading.value || !validForm.value) return
+  isLoading.value = true
 
-    isLoading.value = true
+  await AuthApi.signIn(dataLogin.value)
+    .catch(() => { return isLoading.value = false })
 
-    const data = await new Promise((resolve) => {
-      setTimeout(() => resolve("authorizationToken"), 2000);
-    })
+  if (!rememberMe.value) storage?.removeStorageSync('rmEmail')
+  else storage?.setStorageSync('rmEmail', dataLogin.value.email)
 
-    if (!rememberMe.value) storage?.removeStorageSync('rmEmail')
-    else storage?.setStorageSync('rmEmail', dataLogin.value.email)
+  toast.success('Sign in successful!')
+  router.push('/')
+}
 
-    storage?.setStorageSync('tokenAuth', data)
-
-    toast.success('Sign in successful!')
-    router.push('/')
-  }
-
-  function handleRegister() {
-    router.push('/register')
-  }
+function handleRegister() {
+  router.push('/register')
+}
 </script>
