@@ -1,7 +1,7 @@
 import axios from "axios"
+import store from "@/store"
 import { useStorage } from "vue3-storage-secure"
 import { useTheme } from "vuetify/lib/framework.mjs"
-import { useStore } from "vuex"
 
 export default {
   // ? custom defined
@@ -20,8 +20,8 @@ export default {
   isLogged() {
     return useStorage()?.getStorageSync('tokenAuth') ? true : false
   },
-  user() {
-    return useStore().state.user
+  profile() {
+    return store.state.profile
   },
   appIsLaunched() {
     return useStorage()?.getStorageSync('appIsLaunched')
