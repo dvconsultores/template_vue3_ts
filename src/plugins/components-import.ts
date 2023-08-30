@@ -1,5 +1,6 @@
 // ? imported from the app
 import VImgLoad from '@/components/v-img-load.vue'
+import ModalConfirm from '@/components/modals/modal-confirm.vue'
 
 // ? imported from external
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
@@ -16,4 +17,5 @@ export default {
   VueApexCharts,
   VueRecaptcha,
   VImgLoad,
+  ModalConfirm,
 }
