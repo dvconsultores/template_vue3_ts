@@ -1,6 +1,6 @@
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import router from '../router'
+import router from '@/router'
 import { useStorage } from 'vue3-storage-secure'
 
 // Types
