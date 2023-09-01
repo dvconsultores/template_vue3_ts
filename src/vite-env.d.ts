@@ -1,5 +1,11 @@
 /// <reference types="vite/client" />
 
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
+
 import Loader from '@/components/modals/loader.vue'
 import ModalConfirm from '@/components/modals/modal-confirm.vue'
 import VImgLoad from '@/components/v-img-load.vue'
@@ -13,9 +19,3 @@ declare module '@vue/runtime-core' {
     VImgInput: typeof VImgInput,
   }
 }
-
-// declare module '*.vue' {
-//   import type { DefineComponent } from 'vue'
-//   const component: DefineComponent<{}, {}, any>
-//   export default component
-// }
