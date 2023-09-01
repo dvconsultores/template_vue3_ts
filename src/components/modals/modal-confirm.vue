@@ -51,7 +51,7 @@ defineProps({
       default: 'Aceptar'
     },
     cancelButtonText: {
-      tyoe: String,
+      type: String,
       default: 'Cancelar'
     },
     contentClass: String,
