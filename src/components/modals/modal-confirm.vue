@@ -64,7 +64,7 @@ defineProps({
 const
   emit = defineEmits(['onAccept', 'onClose', 'onCancel']),
 
-  model = ref(false)
+model = ref(false)
 
 defineExpose({ model })
 
