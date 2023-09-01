@@ -4,9 +4,12 @@ import { useStorage } from "vue3-storage-secure"
 import { useTheme } from "vuetify/lib/framework.mjs"
 
 export default {
-  // ? custom defined
+  // ? custom defines
   globalRules: {
-    required: [(v: string) => !!v || "Field required"],
+    required: [
+      (v: string) => !!v || "Field required",
+      (v: File[]) => !!v?.length || "Field required",
+    ],
     email: [
       (v: string) => !!v || "Field required",
       (v: string) => {
