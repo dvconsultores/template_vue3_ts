@@ -60,6 +60,25 @@
   }
 }
 
+.v-dialog {
+  .v-overlay__content {
+
+    > .v-card {
+      overflow: hidden;
+
+      padding: 10px 20px;
+      border-radius: 15px;
+
+      .v-card-title { padding: 10px 0 }
+      .v-card-text { padding: 10px 0 !important }
+      .v-card-actions {
+        padding: 0;
+        gap: 5px;
+      }
+    }
+  }
+}
+
 
 //---------------------------------------------------------------------------------------------//
 //?========== utility classes ==========//

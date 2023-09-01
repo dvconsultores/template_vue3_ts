@@ -1,5 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" max-width="350" :activator="activator" :content-class="contentClass" :persistent="persistent">
+  <v-dialog
+    v-model="model"
+    max-width="350"
+    :activator="activator"
+    :content-class="contentClass"
+    :persistent="persistent"
+  >
     <v-card :loading="loading">
       <v-card-title :class="{'text-center': titleCenter}">
         <slot name="title">{{ title }}</slot>
@@ -15,16 +21,16 @@
 
       <v-card-actions>
         <v-btn
-          class="bg-primary flex-grow-1"
+          class="bg-primary text-white flex-grow-1"
           :disabled="disabled || loading"
           @click="emit('onAccept')"
         >{{ confirmButtonText }}</v-btn>
 
         <v-btn
-          class="bg-tertiary flex-grow-1"
+          class="bg-tertiary text-white flex-grow-1"
           @click="() => {
             emit('onCancel')
-            dialog = false
+            model = false
           }"
         >{{ cancelButtonText }}</v-btn>
       </v-card-actions>
@@ -33,16 +39,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
-const
-  props = defineProps({
-    model: Boolean,
+import { ref, watch } from 'vue'
+
+defineProps({
     activator: String,
     persistent: Boolean,
     title: String,
     content: String,
     confirmButtonText: {
-      tyoe: String,
+      type: String,
       default: 'Aceptar'
     },
     cancelButtonText: {
@@ -54,17 +59,17 @@ const
     disabled: Boolean,
     showDivider: Boolean,
     titleCenter: Boolean,
-  }),
-  model = computed(() => props.model),
+  })
+
+const
   emit = defineEmits(['onAccept', 'onClose', 'onCancel']),
 
-dialog = ref(false)
+  model = ref(false)
+
+defineExpose({ model })
 
 
-watch(model, (val) => dialog.value = val)
-
-watch(dialog, (val) => {
-  if (val) return
-  emit('onClose')
+watch(model, (value) => {
+  if (!value) emit('onClose')
 })
 </script>

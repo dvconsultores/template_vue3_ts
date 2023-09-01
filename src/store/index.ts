@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 const store = createStore({
   state: {
     drawer: true,
+    loader: false,
     profile: {
       uid: undefined,
       username: undefined,
@@ -16,7 +17,10 @@ const store = createStore({
     },
     setDrawerState(state, value) {
       state.drawer = value
-    }
+    },
+    setLoaderState(state, value) {
+      state.loader = value
+    },
   },
   actions: {
     // modalConnect() {

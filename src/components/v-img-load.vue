@@ -67,8 +67,12 @@ defineProps({
 
     &__bone {
       $size: 100%;
+      width: $size;
       min-width: $size;
+      max-width: $size;
+      height: $size;
       min-height: $size;
+      max-height: $size;
       margin: 0;
     }
   }

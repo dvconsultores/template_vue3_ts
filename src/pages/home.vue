@@ -11,7 +11,7 @@
 
       <v-btn
         class="bg-primary text-white"
-        rounded @click="console.log('do anything!')"
+        rounded @click="anything"
       >Do Anything!</v-btn>
     </v-responsive>
   </div>
@@ -30,4 +30,9 @@ name = ref("detextre4")
 onMounted(() => {
   console.log(isLogged() ? 'logged in - ' : '', `welcome back ${name.value}`);
 })
+
+
+function anything() {
+  console.log('do anything!')
+}
 </script>

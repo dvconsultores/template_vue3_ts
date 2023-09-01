@@ -1,4 +1,14 @@
-export function toCssVal(value: any, unit = 'px') {
+import store from '@/store'
+
+export function showLoader(): void {
+  store.commit('setLoaderState', true)
+}
+
+export function closeLoader(): void {
+  store.commit('setLoaderState', false)
+}
+
+export function toCssVal(value: any, unit = 'px'): string {
   // helper
   function setValue(val: string|number|Array<number|string>, i: number|null) {
     if (typeof val === 'string') return val
@@ -28,7 +38,12 @@ export function toCssVal(value: any, unit = 'px') {
   return value
 }
 
-export async function getImageSize(file: any) {
+export function getUrl(file: File): string|null {
+  if (!file) return null
+  return URL.createObjectURL(file)
+}
+
+export async function getImageSize(file: File): Promise<{ width: number, height: number }> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 

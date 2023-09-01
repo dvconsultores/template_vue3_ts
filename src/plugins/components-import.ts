@@ -1,5 +1,6 @@
 // ? imported from the app
 import VImgLoad from '@/components/v-img-load.vue'
+import VImgInput from '@/components/v-img-input.vue'
 import ModalConfirm from '@/components/modals/modal-confirm.vue'
 
 // ? imported from external
@@ -17,5 +18,6 @@ export default {
   VueApexCharts,
   VueRecaptcha,
   VImgLoad,
+  VImgInput,
   ModalConfirm,
 }

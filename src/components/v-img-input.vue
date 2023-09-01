@@ -1,0 +1,143 @@
+<template>
+  <div class="v-img-input">
+    <v-file-input
+      variant="solo-filled"
+      :prepend-inner-icon="prependInnerIcon"
+      :prepend-icon="prependIcon"
+      :append-inner-icon="appendInnerIcon"
+      :append-icon="appendIcon"
+      :rules="rules"
+      :error="error"
+      :error-messages="errorMessages"
+      :messages="messages"
+      :max-errors="maxErrors"
+      :bg-color="bgColor"
+      :base-color="baseColor"
+      :style="`
+        --height: ${height};
+        --max-height: ${maxHeight};
+        --max-width: ${maxWidth};
+        --min-height: ${minHeight};
+        --min-width: ${minWidth};
+        --width: ${width};
+        ${sizes ? `--sizes: ${sizes};` : ''}
+        --border-radius: ${rounded};
+        --border: ${border};
+      `"
+      @change="(event: any) => {
+        src = getUrl(event.target.files[0])
+        emit('update:modelValue', event.target.files)
+      }"
+    >
+      <template #selection>
+        <v-img
+          :src="src"
+          :alt="alt ?? 'image preview of selector'"
+          :width="width"
+          :max-width="maxWidth"
+          :min-width="minWidth"
+          :height="height"
+          :max-height="maxHeight"
+          :min-height="minHeight"
+          :sizes="sizes"
+          :content-class="contentClass"
+          :cover="cover"
+          :eager="eager"
+          :gradient="gradient"
+          :options="options"
+          :transition="transition"
+          :inline="inline"
+          :lazy-src="lazySrc"
+        />
+      </template>
+    </v-file-input>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { getUrl } from '@/plugins/functions'
+
+defineProps({
+  prependInnerIcon: String,
+  prependIcon: String,
+  appendInnerIcon: String,
+  appendIcon: String,
+  alt: String,
+  aspectRatio: Number,
+  contentClass: String,
+  cover: Boolean,
+  eager: Boolean,
+  gradient: String,
+  height: String,
+  maxHeight: String,
+  maxWidth: String,
+  minHeight: String,
+  minWidth: String,
+  sizes: String,
+  width: String,
+  options: Object,
+  transition: String,
+  inline: Boolean,
+  lazySrc: String,
+  rounded: String,
+  border: String,
+  rules: [],
+  errorMessages: [],
+  error: Boolean,
+  messages: String,
+  maxErrors: Number,
+  bgColor: String,
+  baseColor: String,
+})
+
+const 
+  emit = defineEmits(['update:modelValue']),
+
+src = ref<string|any>(null)
+</script>
+
+<style lang="scss">
+.v-img-input {
+  .v-input {
+    width: var(--sizes, var(--width));
+    max-width: var(--sizes, var(--max-width));
+    min-width: var(--sizes, var(--min-width));
+
+    &__control {
+      width: inherit;
+      max-width: inherit;
+      min-width: inherit;
+      height: var(--sizes, var(--height));
+      max-height: var(--sizes, var(--max-height));
+      min-height: var(--sizes, var(--min-height));
+    }
+    
+    .v-field {
+      border-radius: var(--border-radius);
+      border: var(--border);
+      padding: 0;
+
+      &__input {
+        height: 100%;
+        padding: 0;
+      }
+
+      &__clearable {
+        position: absolute;
+        inset: 0;
+      }
+    }
+
+    .v-img {
+      width: var(--sizes, var(--width));
+      max-width: var(--sizes, var(--max-width));
+      min-width: var(--sizes, var(--min-width));
+      height: var(--sizes, var(--height));
+      max-height: var(--sizes, var(--max-height));
+      min-height: var(--sizes, var(--min-height));
+      border-radius: 50%;
+    }
+  }
+}
+</style>
