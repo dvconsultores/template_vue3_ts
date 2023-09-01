@@ -2,6 +2,7 @@
   <div class="v-img-input">
     <v-file-input
       variant="solo-filled"
+      :accept="accept"
       :prepend-inner-icon="prependInnerIcon"
       :prepend-icon="prependIcon"
       :append-inner-icon="appendInnerIcon"
@@ -25,8 +26,10 @@
         --border: ${border};
       `"
       @change="(event: any) => {
-        src = getUrl(event.target.files[0])
-        emit('update:modelValue', event.target.files)
+        const files = event.target.files
+
+        src = getUrl(files[0])
+        emit('update:modelValue', files)
       }"
     >
       <template #selection>
@@ -59,6 +62,10 @@ import { ref } from 'vue'
 import { getUrl } from '@/plugins/functions'
 
 defineProps({
+  accept: {
+    type: String,
+    default: 'image/*'
+  },
   prependInnerIcon: String,
   prependIcon: String,
   appendInnerIcon: String,
@@ -100,19 +107,16 @@ src = ref()
 <style lang="scss">
 .v-img-input {
   .v-input {
-    width: var(--sizes, var(--width));
-    max-width: var(--sizes, var(--max-width));
-    min-width: var(--sizes, var(--min-width));
 
     &__control {
-      width: inherit;
-      max-width: inherit;
-      min-width: inherit;
+      width: var(--sizes, var(--width));
+      max-width: var(--sizes, var(--max-width));
+      min-width: var(--sizes, var(--min-width));
       height: var(--sizes, var(--height));
       max-height: var(--sizes, var(--max-height));
       min-height: var(--sizes, var(--min-height));
     }
-    
+
     .v-field {
       border-radius: var(--border-radius);
       border: var(--border);
