@@ -94,7 +94,7 @@ defineProps({
 const 
   emit = defineEmits(['update:modelValue']),
 
-src = ref<string|any>(null)
+src = ref()
 </script>
 
 <style lang="scss">
