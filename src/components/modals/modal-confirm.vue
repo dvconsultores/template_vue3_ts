@@ -42,24 +42,24 @@
 import { ref, watch } from 'vue'
 
 defineProps({
-    activator: String,
-    persistent: Boolean,
-    title: String,
-    content: String,
-    confirmButtonText: {
-      type: String,
-      default: 'Aceptar'
-    },
-    cancelButtonText: {
-      type: String,
-      default: 'Cancelar'
-    },
-    contentClass: String,
-    loading: Boolean,
-    disabled: Boolean,
-    showDivider: Boolean,
-    titleCenter: Boolean,
-  })
+  activator: String,
+  persistent: Boolean,
+  title: String,
+  content: String,
+  confirmButtonText: {
+    type: String,
+    default: 'Aceptar'
+  },
+  cancelButtonText: {
+    type: String,
+    default: 'Cancelar'
+  },
+  contentClass: String,
+  loading: Boolean,
+  disabled: Boolean,
+  showDivider: Boolean,
+  titleCenter: Boolean,
+})
 
 const
   emit = defineEmits(['onAccept', 'onClose', 'onCancel']),
