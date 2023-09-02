@@ -7,7 +7,7 @@ import ModalConfirm from '@/components/modals/modal-confirm.vue'
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
 import { VOtpInput } from 'vuetify/labs/VOtpInput'
 import { VDataTable, VDataTableServer } from 'vuetify/labs/VDataTable'
-import VueApexCharts from "vue3-apexcharts";
+import VueApexCharts from "vue3-apexcharts"
 import VueRecaptcha from 'vue3-recaptcha2'
 
 export default {

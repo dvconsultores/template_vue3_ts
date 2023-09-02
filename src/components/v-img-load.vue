@@ -25,7 +25,6 @@
       <v-skeleton-loader
         :boilerplate="stopLoading"
         :color="colorLoader"
-        type="avatar"
         width="100%"
         height="100%"
       ></v-skeleton-loader>
@@ -62,19 +61,17 @@ defineProps({
 
 <style lang="scss">
 .v-img-load {
-  .v-img__placeholder .v-skeleton-loader{
-    border-radius: 50%;
+  border-radius:var(--border-radius);
 
-    &__bone {
-      $size: 100%;
-      width: $size;
-      min-width: $size;
-      max-width: $size;
-      height: $size;
-      min-height: $size;
-      max-height: $size;
-      margin: 0;
-    }
+  .v-img__placeholder .v-skeleton-loader__bone {
+    $size: 100%;
+    width: $size;
+    min-width: $size;
+    max-width: $size;
+    height: $size;
+    min-height: $size;
+    max-height: $size;
+    margin: 0;
   }
 }
 </style>

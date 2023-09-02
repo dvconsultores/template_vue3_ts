@@ -1,6 +1,7 @@
 <template>
   <div class="v-img-input">
     <v-file-input
+      v-model:model-value="model"
       variant="solo-filled"
       :accept="accept"
       :prepend-inner-icon="prependInnerIcon"
@@ -28,7 +29,7 @@
       @change="(event: any) => {
         const files = event.target.files
 
-        src = getUrl(files[0])
+        src = getUrlFromFile(files[0])
         emit('update:modelValue', files)
       }"
     >
@@ -58,14 +59,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { getUrl } from '@/plugins/functions'
+import { ref, watch, onBeforeMount, computed } from 'vue'
+import { getUrlFromFile, getFileFromUrl } from '@/plugins/functions'
 
-defineProps({
+const
+  props = defineProps({
   accept: {
     type: String,
     default: 'image/*'
   },
+  modelValue: [String, FileList, File],
   prependInnerIcon: String,
   prependIcon: String,
   appendInnerIcon: String,
@@ -96,12 +99,28 @@ defineProps({
   maxErrors: Number,
   bgColor: String,
   baseColor: String,
+}),
+modelValue = computed(() => props.modelValue),
+emit = defineEmits(['update:modelValue']),
+
+model = ref(),
+src = ref()
+
+
+watch(modelValue, getData)
+onBeforeMount(() => {
+  if (!modelValue.value) return
+  getData(modelValue.value)
 })
 
-const 
-  emit = defineEmits(['update:modelValue']),
+async function getData(value: string|FileList|File|undefined) {
+  if (typeof value !== 'string') return
 
-src = ref()
+  const file = await getFileFromUrl(value)
+
+  src.value = value
+  model.value = [file]
+}
 </script>
 
 <style lang="scss">
@@ -116,7 +135,7 @@ src = ref()
       max-height: var(--sizes, var(--max-height));
       min-height: var(--sizes, var(--min-height));
     }
-
+    
     .v-field {
       border-radius: var(--border-radius);
       border: var(--border);
@@ -140,7 +159,7 @@ src = ref()
       height: var(--sizes, var(--height));
       max-height: var(--sizes, var(--max-height));
       min-height: var(--sizes, var(--min-height));
-      border-radius: 50%;
+      border-radius: var(--border-radius);
     }
   }
 }
