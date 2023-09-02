@@ -23,7 +23,7 @@ import mixins from './mixins-import'
 
 // Services
 import firebaseApi from '@/services/firebase-api'
-import nearApi from '@/services/near-api'
+// import nearApi from '@/services/near-api'
 
 // Types
 import type { App } from 'vue'
@@ -45,7 +45,7 @@ export function registerPlugins(app: App) {
 
   // Use services
   firebaseApi(app)
-  nearApi(app)
+  // nearApi(app)
 
   // Use custom plugins
   // loadFonts()
