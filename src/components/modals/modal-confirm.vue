@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="model"
-    max-width="350"
+    :max-width="maxWidth"
     :activator="activator"
     :content-class="contentClass"
     :persistent="persistent"
@@ -19,27 +19,24 @@
         </slot>
       </v-card-text>
 
-      <v-card-actions>
+      <v-card-actions v-if="!hideActions">
+        <v-btn
+          class="bg-tertiary text-white flex-grow-1"
+          @click="hasCancelEmit ? emit('cancel') : model = false"
+        >{{ cancelButtonText }}</v-btn>
+
         <v-btn
           class="bg-primary text-white flex-grow-1"
           :disabled="disabled || loading"
-          @click="emit('onAccept')"
+          @click="emit('accept')"
         >{{ confirmButtonText }}</v-btn>
-
-        <v-btn
-          class="bg-tertiary text-white flex-grow-1"
-          @click="() => {
-            emit('onCancel')
-            model = false
-          }"
-        >{{ cancelButtonText }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, getCurrentInstance } from 'vue'
 
 defineProps({
   activator: String,
@@ -59,17 +56,24 @@ defineProps({
   disabled: Boolean,
   showDivider: Boolean,
   titleCenter: Boolean,
+  maxWidth: {
+    type: String,
+    default: "350"
+  },
+  hideActions: Boolean,
 })
 
 const
-  emit = defineEmits(['onAccept', 'onClose', 'onCancel']),
+  emit = defineEmits(['accept', 'close', 'cancel']),
+  instance = getCurrentInstance(),
 
-model = ref(false)
+model = ref(false),
+hasCancelEmit = !!instance?.vnode.props?.onCancel
 
 defineExpose({ model })
 
 
 watch(model, (value) => {
-  if (!value) emit('onClose')
+  if (!value) emit('close')
 })
 </script>
