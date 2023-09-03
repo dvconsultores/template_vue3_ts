@@ -16,14 +16,14 @@
       :bg-color="bgColor"
       :base-color="baseColor"
       :style="`
-        --height: ${height};
-        --max-height: ${maxHeight};
-        --max-width: ${maxWidth};
-        --min-height: ${minHeight};
-        --min-width: ${minWidth};
-        --width: ${width};
-        ${sizes ? `--sizes: ${sizes};` : ''}
-        --border-radius: ${rounded};
+        --height: ${isOnlyDigits(height) ? `${height}px` : height};
+        --max-height: ${isOnlyDigits(maxHeight) ? `${maxHeight}px` : maxHeight};
+        --max-width: ${isOnlyDigits(maxWidth) ? `${maxWidth}px` : maxWidth};
+        --min-height: ${isOnlyDigits(minHeight) ? `${minHeight}px` : minHeight};
+        --min-width: ${isOnlyDigits(minWidth) ? `${minWidth}px` : minWidth};
+        --width: ${isOnlyDigits(width) ? `${width}px` : width};
+        ${!!sizes ? `--sizes: ${isOnlyDigits(sizes) ? `${sizes}px` : sizes};` : ''}
+        --border-radius: ${isOnlyDigits(rounded) ? `${rounded}px` : rounded};
         --border: ${border};
       `"
       @change="(event: any) => {
@@ -37,13 +37,12 @@
         <v-img
           :src="src"
           :alt="alt ?? 'image preview of selector'"
-          :width="width"
+          :width="sizes ?? width"
           :max-width="maxWidth"
           :min-width="minWidth"
-          :height="height"
+          :height="sizes ?? height"
           :max-height="maxHeight"
           :min-height="minHeight"
-          :sizes="sizes"
           :content-class="contentClass"
           :cover="cover"
           :eager="eager"
@@ -60,7 +59,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onBeforeMount, computed } from 'vue'
-import { getUrlFromFile, getFileFromUrl } from '@/plugins/functions'
+import { getUrlFromFile, getFileFromUrl, isOnlyDigits } from '@/plugins/functions'
 
 const
   props = defineProps({

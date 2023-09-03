@@ -7,19 +7,21 @@
     :cover="cover"
     :eager="eager"
     :gradient="gradient"
-    :height="height"
+    :height="sizes ?? height"
     :max-height="maxHeight"
     :max-width="maxWidth"
     :min-height="minHeight"
     :min-width="minWidth"
-    :sizes="sizes"
-    :width="width"
+    :width="sizes ?? width"
     :options="options"
     :transition="transition"
     :inline="inline"
     :lazy-src="lazySrc"
     class="v-img-load"
-    :style="`--border-radius: ${rounded}; --border: ${border}`"
+    :style="`
+      --border-radius: ${isOnlyDigits(rounded) ? `${rounded}px` : rounded};
+      --border: ${border};
+    `"
   >
     <template v-if="!lazySrc" #placeholder>
       <v-skeleton-loader
@@ -33,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { isOnlyDigits } from '@/plugins/functions'
+
 defineProps({
   src: String,
   alt: String,
@@ -41,11 +45,11 @@ defineProps({
   cover: Boolean,
   eager: Boolean,
   gradient: String,
-  height: String,
-  maxHeight: String,
-  maxWidth: String,
-  minHeight: String,
-  minWidth: String,
+  height: [String, Number],
+  maxHeight: [String, Number],
+  maxWidth: [String, Number],
+  minHeight: [String, Number],
+  minWidth: [String, Number],
   sizes: String,
   width: String,
   options: Object,
