@@ -1,37 +1,49 @@
-@use "mixins.scss" as *;
+@use "mixins.scss";
+@use "variables.scss" as vars;
 //---------------------------------------------------------------------------------------------//
-//======================================= custom mixins =======================================//
+//====================================== helper classes =======================================//
 //---------------------------------------------------------------------------------------------//
 
-//- parent -//
-@mixin parent() {
+//*- parent -//
+.parent {
   max-width: var(--parent) !important;
   width: 100%;
   margin-inline: auto;
 }
 
-//- subparent -//
-@mixin subparent() {
+//*- subparent -//
+.subparent {
   max-width: var(--subparent) !important;
   width: 100%;
   margin-inline: auto;
 }
 
-//- pixel border -//
-@mixin pixelBorder() {
+//*- margin-global -//
+.full-screen {
+  width: 100vw !important;
+  margin-inline: calc(50% - 50vw);
+}
+
+//*- margin-global -//
+.margin-global {
+  padding-inline: var(--margin-global);
+}
+
+//*- pixel border -//
+.pixelBorder {
   --c-size: 4.5px;
   
   padding: var(--c-size);
   position: relative;
   isolation: isolate;
-  clip-path: $clip-path;
+  clip-path: vars.$clip-path;
   
   &::before, &::after {
     content: "" !important;
     position: absolute !important;
     opacity: 1 !important;
     z-index: -1 !important;
-    clip-path: $clip-path;
+    clip-path: vars.$clip-path;
     inset: 0;
   }
   
@@ -47,8 +59,8 @@
   }
 }
 
-//- buttons -//
-@mixin btn() {
+//*- buttons -//
+.btn {
   --bg: rgb(var(--v-theme-primary));
   --c: #000000;
   --b: initial;
@@ -102,8 +114,8 @@
   }
 }
 
-//- cards -//
-@mixin card() {
+//*- cards -//
+.card {
   --w: initial;
   --max-w: none;
   --min-w: none;
@@ -134,36 +146,3 @@
   transform: var(--t);
   filter: var(--f);
 }
-
-
-
-//---------------------------------------------------------------------------------------------//
-//====================================== custom classes =======================================//
-//---------------------------------------------------------------------------------------------//
-
-//- limit size -//
-.parent {
-  @include parent;
-}
-.subparent {
-  @include subparent;
-}
-.margin_global {
-  padding-inline: var(--margin-global);
-}
-.margin_globalmobile {
-  @include media(max, small) {padding-inline: var(--margin-global) !important}
-}
-
-
-//- buttons -//
-.btn {
-  @include btn;
-}
-
-
-//- cards -//
-.card {
-  @include card;
-}
-

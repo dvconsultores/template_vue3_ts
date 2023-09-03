@@ -1,16 +1,24 @@
 <template>
-  <v-footer id="footer" app absolute class="flex-center">
-    <h6>footer</h6>
+  <v-footer
+    id="footer"
+    app absolute
+    class="flex-center"
+  >
+    <div id="footer__wrapper">
+      <h6 class="text-center">footer</h6>
+    </div>
   </v-footer>
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/styles/config/variables.scss';
-@import '@/assets/styles/config/custom-mixins.scss';
+@use '@/assets/styles/main.scss' as *;
 
 #footer {
   transition: 0.5s $ease-return;
-  @include parent;
-  padding-inline: var(--margin-global);
+  @extend .margin-global;
+
+  &__wrapper {
+    @extend .parent;
+  }
 }
 </style>

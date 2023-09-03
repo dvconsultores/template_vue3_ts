@@ -2,9 +2,7 @@
   <section
     class="full-screen"
     :style="`
-      width: 100vw;
       height: ${isOnlyDigits(height) ? `${height}px` : height};
-      margin-inline: calc(50% - 50vw);
       background: ${color};
       padding: ${isOnlyDigits(padding) ? `${padding}px` : padding};
       padding-inline: ${isOnlyDigits(paddingInline) ? `${paddingInline}px` : paddingInline};

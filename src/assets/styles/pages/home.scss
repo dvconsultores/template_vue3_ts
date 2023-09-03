@@ -4,7 +4,7 @@
 //---------------------------------------------------------------------------------------------//
 
 #home {
-  @include parent;
-  padding-inline: var(--margin-global);
-  gap: 4em;
+  @extend .parent;
+  @extend .margin-global;
+  gap: 64px;
 }
