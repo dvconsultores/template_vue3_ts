@@ -111,7 +111,7 @@ function handleLoadFile(event: any) {
     bottom: 0;
     margin: auto;
     right: 0;
-    opacity: .5;
+    opacity: 0;
 
     transition: .4s cubic-bezier(0.445, 0.05, 0.55, 0.95);
   }
