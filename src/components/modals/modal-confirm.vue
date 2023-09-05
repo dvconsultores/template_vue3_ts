@@ -1,6 +1,7 @@
 <template>
   <v-dialog
     v-model="model"
+    :fullscreen="fullscreen"
     :max-width="maxWidth"
     :activator="activator"
     :content-class="contentClass"
@@ -39,6 +40,7 @@
 import { ref, watch, getCurrentInstance } from 'vue'
 
 defineProps({
+  fullscreen: Boolean,
   activator: String,
   persistent: Boolean,
   title: String,
