@@ -65,8 +65,11 @@ defineProps({
 
 <style lang="scss">
 .v-img-load {
-  border-radius: var(--border-radius);
-  border: var(--border);
+  
+  .v-image__image {
+    border-radius: var(--border-radius);
+    border: var(--border);
+  }
 
   .v-img__placeholder .v-skeleton-loader__bone {
     $size: 100%;
@@ -77,6 +80,8 @@ defineProps({
     min-height: $size;
     max-height: $size;
     margin: 0;
+    border-radius: var(--border-radius);
+    border: var(--border);
   }
 }
 </style>

@@ -99,6 +99,7 @@ function handleLoadFile(event: any) {
 <style lang="scss">
 .v-avatar-upload {
   position: relative;
+  width: max-content;
 
   &:hover .v-avatar-upload__icon {
     transform: translateX(calc(var(--icon-size) + 10px));
@@ -117,7 +118,10 @@ function handleLoadFile(event: any) {
   }
 
   &__image {
-    border-radius:var(--border-radius);
+    .v-image__image {
+      border-radius: var(--border-radius);
+      border: var(--border);
+    }
   }
 
   .v-img__placeholder .v-skeleton-loader__bone {
@@ -129,6 +133,8 @@ function handleLoadFile(event: any) {
     min-height: $size;
     max-height: $size;
     margin: 0;
+    border-radius: var(--border-radius);
+    border: var(--border);
   }
 }
 </style>
