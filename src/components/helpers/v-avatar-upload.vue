@@ -35,6 +35,7 @@
             isOnlyDigits(rounded) ? `${rounded}px` : rounded
             : '50%'};
         --border: ${border};
+        --box-shadow: ${boxShadow};
       `"
       @click="file.click()"
     >
@@ -82,6 +83,7 @@ defineProps({
     type: [String, Number],
     default: "20px"
   },
+  boxShadow: String,
 })
 
 const
@@ -121,6 +123,7 @@ function handleLoadFile(event: any) {
     .v-image__image {
       border-radius: var(--border-radius);
       border: var(--border);
+      box-shadow: var(--box-shadow);
     }
   }
 
