@@ -22,6 +22,7 @@
       --border-radius: ${isOnlyDigits(rounded) ? `${rounded}px` : rounded};
       --border: ${border};
       --box-shadow: ${boxShadow};
+      --background-color: ${bgColor};
     `"
   >
     <template v-if="!lazySrc" #placeholder>
@@ -58,20 +59,22 @@ defineProps({
   inline: Boolean,
   lazySrc: String,
   stopLoading: Boolean,
-  rounded: String,
+  rounded: [String, Number],
   border: String,
   colorLoader: String,
   boxShadow: String,
+  bgColor: String,
 })
 </script>
 
 <style lang="scss">
 .v-img-load {
   
-  .v-image__image {
+  .v-img__img {
     border-radius: var(--border-radius);
     border: var(--border);
     box-shadow: var(--box-shadow);
+    background-color: var(--background-color);
   }
 
   .v-img__placeholder .v-skeleton-loader__bone {
