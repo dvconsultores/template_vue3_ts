@@ -15,6 +15,9 @@ export default (app: App) => {
     position: POSITION.TOP_RIGHT,
     toastDefaults: {
       // ToastOptions object for each type of toast
+      [TYPE.INFO]: {
+        position: POSITION.BOTTOM_RIGHT
+      },
       [TYPE.ERROR]: {
         timeout: 10000,
       },
