@@ -15,7 +15,7 @@
       <v-divider v-if="showDivider"></v-divider>
 
       <v-card-text>
-        <slot name="content">
+        <slot>
           <p>{{ content }}</p>
         </slot>
       </v-card-text>

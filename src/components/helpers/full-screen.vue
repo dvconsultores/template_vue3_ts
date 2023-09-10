@@ -18,7 +18,7 @@
         ${contentStyle}
       `"
     >
-      <slot name="content"></slot>
+      <slot />
     </div>
   </section>
 </template>
