@@ -8,7 +8,7 @@
         variant="solo"
         placeholder="Correo electronico"
         append-inner-icon="mdi-email"
-        :rules="globalRules.email"
+        :rules="[globalRules.email]"
         @keydown="(e: any) => {
           if (e.key !== 'Enter') return
           passwordInput?.focus()
@@ -22,7 +22,7 @@
         placeholder="Contraseña"
         :type="showPassword ? 'text' : 'password'"
         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-        :rules="rules.password"
+        :rules="[rules.password]"
         @click:appendInner="showPassword = !showPassword"
         @keydown="(e: any) => {
           if (e.key !== 'Enter') return
@@ -82,10 +82,8 @@ dataLogin = ref({
   password: '',
 }),
 rules = {
-  password: [
-    (v: string) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{6,}$/.test(v)
-      || 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial',
-  ]
+  password: (v: string) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{6,}$/.test(v)
+    || 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial',
 },
 passwordInput: Ref<HTMLElement|null> = ref(null)
 

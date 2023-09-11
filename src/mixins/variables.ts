@@ -6,20 +6,17 @@ import { useTheme } from "vuetify/lib/framework.mjs"
 export default {
   // ? custom defines
   globalRules: {
-    required: [(v: string) => !!v || "Field required"],
-    listRequired: [(v: any[]) => !!v?.length || "Field required"],
-    email: [
-      (v: string) => !!v || "Field required",
-      (v: string) => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return pattern.test(v) || 'Invalid email.'
-      },
-    ],
+    required: (v: string) => !!v || "Field required",
+    listRequired: (v: any[]) => !!v?.length || "Field required",
+    email: (v: string) => {
+      const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return pattern.test(v) || 'Invalid email.'
+    },
   },
   isProduction: process.env.NODE_ENV === 'production',
 
   isLogged() {
-    return useStorage()?.getStorageSync('tokenAuth') ? true : false
+    return !!useStorage()?.getStorageSync('tokenAuth')
   },
   profile() {
     return store.state.profile
