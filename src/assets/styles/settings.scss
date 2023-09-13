@@ -1,5 +1,9 @@
 @use "./utils/mixins.scss" as *;
 @use "./utils/variables.scss" as vars;
+
+@use "vuetify/lib/styles/generic";
+@use "vuetify/lib/styles/elements";
+@use "vuetify/lib/styles/utilities";
 @use 'vuetify/settings'; /* with (
 ); */
 
@@ -28,13 +32,6 @@
   color: #fff;
   & * {color: #fff}
 }
-.activeClass2 {
-  background-color: vars.$primary;
-  border: 1px solid #000000;
-  color: #fff;
-  & * {color: #fff}
-}
-
 .activeBtn {
   transition: .5s vars.$ease-return;
   &::after, &::before {display: none}
@@ -83,27 +80,6 @@
 //---------------------------------------------------------------------------------------------//
 //?========== utility classes ==========//
 //---------------------------------------------------------------------------------------------//
-[c-font] {
-  text-decoration: var(--under, initial);
-  font-size: var(--fs, 16px);
-  letter-spacing: var(--ls, normal);
-  line-height: var(--lh, 1);
-}
-[c-box] {
-  width: var(--w, auto);
-  max-width: var(--max-w, auto);
-  min-width: var(--min-w, auto);
-  height: var(--h, auto);
-  max-height: var(--max-h, auto);
-  min-height: var(--min-h, auto);
-  padding: var(--p, initial);
-  margin: var(--m, initial);
-  box-shadow: var(--bs, initial);
-  border: var(--b, initial);
-  border-radius: var(--br, initial);
-  background: var(--bg, initial);
-}
-
 .font-resizer {font-size: var(--resizer)}
 .font-1 {font-family:var(--font-1)}
 .font-2 {font-family:var(--font-2)}
@@ -224,225 +200,6 @@
     background-color: var(--bg-line, #000);
   }
 }
-
-
-// TODO checkout for update
-// //---------------------------------------------------------------------------------------------//
-// //========== vuetify classes (components) ==========//
-// //---------------------------------------------------------------------------------------------//
-
-// //- data table -//
-// .v-data-table {
-//   --bg: transparent;
-//   --spacing: 20px;
-//   // th
-//   --c-th: var(--accent);
-//   --fw-th: var(--fw, bold);
-//   --fs-th: max(14px, 1.1em);
-//   --distance-th: 0;
-//   // td
-//   --bg-td: var(--secondary);
-//   --p-td: 20px;
-//   --br-td: 30px;
-//   --fs-td: max(16px, 1.3125em);
-
-//   background-color: var(--bg);
-//   table {border-spacing: 0 var(--spacing)}
-
-//   thead {
-//     transform: translateY(var(--distance-th));
-//     tr {
-//       th {
-//         border-bottom: none;
-//         span {
-//           font-size: var(--fs-th);
-//           font-weight: var(--fw-th);
-//           color: var(--c-th);
-//         }
-//       }
-//     }
-//   }
-
-//   tbody {
-//     tr {
-//       background-color: var(--bg-td);
-//       td {
-//         padding: var(--p-td);
-//         border-bottom: none;
-//         &:not(:has(span)), span:not(.v-btn *) {font-size: var(--fs-td)}
-//         &:first-of-type {border-radius: var(--br-td) 0 0 var(--br-td)}
-//         &:last-of-type {border-radius: 0 var(--br-td) var(--br-td) 0}
-//       }
-//     }
-//   }
-// }
-
-
-// //- default inputs -//
-
-// //- input textarea
-// .v-input:not(.not_vuetify, .not) {
-//   --h-input: 85px;
-
-//   textarea {height: var(--h-input)}
-// }
-
-// //- input slot
-// .v-field__input:not(.not_vuetify, .not) {
-//   --bg: rgba(245, 245, 245, 0.4);
-//   --c: #000000;
-//   --c-label: #FFFFFF;
-//   --c-place: #6e6e6e;
-//   --b: initial;
-//   --ol: initial;
-//   --br: 30px;
-//   --p: 0 12px;
-//   --w: initial;
-//   --max-w: none;
-//   --min-w: none;
-//   --h: 2.75em;
-//   --bs: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-//   --f: none;
-//   --t: none;
-//   --o-disabled: .5;
-//   // normal
-//   --fw: 400;
-//   --ff: var(--font-2);
-//   --tt: none;
-//   --ls: normal;
-//   --lh: 1;
-//   // icon
-//   --fs-icon: var(--fs, 1.2em);
-//   // label
-//   --fs-label: calc(var(--fs, 1.2em) - .15em);
-//   --fw-label: var(--fw);
-//   --ff-label: var(--ff);
-//   --tt-label: var(--tt);
-//   --ls-label: var(--ls);
-//   --lh-label: var(--lh);
-//   --stroke-label: var(--stroke, initial);
-//   // placeholder
-//   --fs-place: 1em;
-//   --fw-place: var(--fw);
-//   --ff-place: var(--ff);
-//   --tt-place: var(--tt);
-//   --ls-place: var(--ls);
-//   --lh-place: var(--lh);
-//   --stroke-place: var(--stroke, initial);
-
-//   width: var(--w);
-//   max-width: var(--max-w);
-//   min-width: var(--min-w);
-  
-//   // under testing
-//   & .v-input__control {
-//     display: flex;
-//     justify-content: center;
-//   }
-//   // under testing
-  
-//   & .v-input__slot {
-//     background: var(--bg);
-//     border-radius: var(--br);
-//     border: var(--b);
-//     outline: var(--ol);
-//     padding: var(--p);
-//     min-height: var(--h);
-//     box-shadow: var(--bs);
-//     transform: var(--t);
-//     filter: var(--f);
-//   }
-  
-//   // testing
-//   & i {font-size: calc(var(--fs-icon) + .3em)}
-//   // testing
-  
-//   // text //
-//   & :is(input[type], button[type], textarea, .v-select__selection) {
-//     color: var(--c);
-//     font-size: var(--fs, max(14px, 1.2em));
-//     font-weight: var(--fw);
-//     font-family: var(--ff);
-//     text-transform: var(--tt);
-//     letter-spacing: var(--ls);
-//     line-height: var(--lh);
-//     -webkit-text-stroke: var(--stroke);
-//     -moz-text-stroke: var(--stroke);
-//     -ms-text-stroke: var(--stroke);
-//     -o-text-stroke: var(--stroke);
-    
-//     // placeholder //
-//     &::placeholder {
-//       color: var(--c-place);
-//       font-size: var(--fs-place);
-//       font-weight: var(--fw-place);
-//       font-family: var(--ff-place);
-//       text-transform: var(--tt-place);
-//       letter-spacing: var(--ls-place);
-//       line-height: var(--lh-place);
-//       -webkit-text-stroke: var(--stroke-place);
-//       -moz-text-stroke: var(--stroke-place);
-//       -ms-text-stroke: var(--stroke-place);
-//       -o-text-stroke: var(--stroke-place);
-//     }
-//   }
-  
-//   // label //
-//   & .v-label {
-//     color: var(--c-label);
-//     font-size: var(--fs-label);
-//     font-weight: var(--fw-label);
-//     font-family: var(--ff-label);
-//     text-transform: var(--tt-label);
-//     letter-spacing: var(--ls-label);
-//     line-height: var(--lh-label);
-//     -webkit-text-stroke: var(--stroke-label);
-//     -moz-text-stroke: var(--stroke-label);
-//     -ms-text-stroke: var(--stroke-label);
-//     -o-text-stroke: var(--stroke-label);
-//   }
-  
-//   // input statements //
-//   &.v-input--is-focused:not(.not_focus, .not_statement) .v-input__slot {--ol: 1px solid rgba(255, 255, 255, 0.3)}
-//   &.error--text:not(.not_error, .not_statement) .v-input__slot {--ol: 1px solid var(--error)}
-//   &.v-input--is-disabled:not(.not_disabled, .not_statement) {opacity: var(--o-disabled); pointer-events: none}
-// }
-
-
-// //- menu select (desplegable menu) -//
-// .v-menu__content {overscroll-behavior: contain}
-
-// .v-select-list {
-//   font-size: var(--resizer);
-//   background: var(--secondary);
-//   border-radius: vars.$border-btn;
-//   overflow: hidden;
-  
-//   :is(.v-list-item__title, span) {
-//     font-size: 1em;
-//     color: #ffffff;
-    
-//     &::first-letter {text-transform: uppercase}
-//   }
-  
-//   .v-list-item {
-//     min-height: 3em;
-//     &--active {
-//       background: $btn;
-      
-//       :is(.v-list-item__title, span) {color: $text-btn}
-//     }
-//   }
-// }
-
-
-// //- dialog -//
-// .v-dialog {
-//   overscroll-behavior: contain;
-  
-//   &::-webkit-scrollbar {display: none}
-//   // @include media(max, 500px) {margin-inline: 0}
-// }
 
 
 //---------------------------------------------------------------------------------------------//
