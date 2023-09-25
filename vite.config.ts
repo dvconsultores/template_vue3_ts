@@ -29,7 +29,6 @@ export default defineConfig((userConfig) => {
       'process.env': {
         BASE_URL: baseUrl,
         API_URL: env.VITE_API_URL,
-        RECAPTCHA_SITE_KEY: env.VITE_RECAPTCHA_SITE_KEY,
       },
       __VUE_I18N_FULL_INSTALL__: true,
       __VUE_I18N_LEGACY_API__: false,
