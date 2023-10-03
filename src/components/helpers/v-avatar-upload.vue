@@ -120,6 +120,8 @@ function handleLoadFile(event: any) {
   }
 
   &__image {
+    border-radius: var(--border-radius);
+
     .v-image__image {
       border-radius: var(--border-radius);
       border: var(--border);
