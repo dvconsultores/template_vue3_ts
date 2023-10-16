@@ -138,3 +138,13 @@ export function hourFormatter(time: number) {
 
   return result;
 }
+
+export function delayed(timeout: number, callback: Function) {
+  return new Promise((resolve, reject) => {
+    try {
+      setTimeout(() => resolve(callback ? callback() : null), timeout);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
