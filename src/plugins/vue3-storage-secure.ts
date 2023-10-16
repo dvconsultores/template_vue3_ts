@@ -3,10 +3,14 @@ import Vue3Storage from "vue3-storage-secure";
 // Types
 import type { App } from 'vue'
 
-export default (app: App) => {
-  // 1. app.use(Vue3Storage)
-  // 2. app.use(Vue3Storage, { namespace: "jarvis_" })
-
-  // namespace: 命名空间，secureKey: 加密盐值
-  app.use(Vue3Storage, { namespace: "jarvis_", secureKey: "246810" })
+export const storageSecureCollection = {
+  appIsLaunched: 'appIsLaunched',
+  uid: 'uid',
+  tokenAuth: 'tokenAuth',
+  rememberEmail: 'rmEmail',
 }
+
+export default (app: App) => app.use(Vue3Storage, {
+  namespace: process.env.SECURE_STORAGE_NAME_SPACE,
+  secureKey: process.env.SECURE_STORAGE_KEY
+})

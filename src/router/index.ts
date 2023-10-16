@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useStorage } from "vue3-storage-secure";
 import { nextTick } from 'vue'
 import { APP_NAMES } from '@/plugins/dictionary';
+import { storageSecureCollection } from '@/plugins/vue3-storage-secure';
 
 const DEFAULT_TITLE = APP_NAMES.capitalize;
 
@@ -56,7 +57,7 @@ router.beforeEach((to, from, next) => {
 
   // this route requires auth, check if logged in
   // if not, redirect to login page.
-  const tokenAuth = useStorage()?.getStorageSync("tokenAuth")
+  const tokenAuth = useStorage()?.getSecureStorageSync(storageSecureCollection.tokenAuth)
   if (to.matched.some(record => record.meta.requiresAuth) && !tokenAuth)
     return next({ name: 'Login' })
 
@@ -69,8 +70,7 @@ router.afterEach((to, /* from */) => {
   // Use next tick to handle router history correctly
   // see: https://github.com/vuejs/vue-router/issues/914#issuecomment-384477609
   nextTick(() => {
-    if (to.meta.head) document.title = to.meta.head.toString();
-    else document.title = DEFAULT_TITLE;
+    document.title = to.meta.head?.toString() || DEFAULT_TITLE;
   });
 });
 

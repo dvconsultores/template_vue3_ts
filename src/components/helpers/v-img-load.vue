@@ -23,6 +23,7 @@
       --border: ${border};
       --box-shadow: ${boxShadow};
       --background-color: ${bgColor};
+      --padding: ${padding};
     `"
   >
     <template v-if="!lazySrc" #placeholder>
@@ -64,6 +65,7 @@ defineProps({
   colorLoader: String,
   boxShadow: String,
   bgColor: String,
+  padding: String,
 })
 </script>
 
@@ -72,6 +74,7 @@ defineProps({
   border-radius: var(--border-radius);
   
   .v-img__img {
+    padding: var(--padding);
     border-radius: var(--border-radius);
     border: var(--border);
     box-shadow: var(--box-shadow);

@@ -15,6 +15,7 @@
       :max-errors="maxErrors"
       :bg-color="bgColor"
       :base-color="baseColor"
+      :class="{ fullWidth, 'v-input--empty': !model?.length }"
       :style="`
         --height: ${isOnlyDigits(height) ? `${height}px` : height};
         --max-height: ${isOnlyDigits(maxHeight) ? `${maxHeight}px` : maxHeight};
@@ -25,6 +26,7 @@
         ${!!sizes ? `--sizes: ${isOnlyDigits(sizes) ? `${sizes}px` : sizes};` : ''}
         --border-radius: ${isOnlyDigits(rounded) ? `${rounded}px` : rounded};
         --border: ${border};
+        --label-align: ${labelAlign};
       `"
       @change="(event: any) => {
         const files = event.target.files
@@ -33,6 +35,14 @@
         emit('update:modelValue', files)
       }"
     >
+      <template #label>
+        <slot name="label">{{ label }}</slot>
+      </template>
+
+      <template #append>
+        <slot name="append" />
+      </template>
+
       <template #selection>
         <v-img
           :src="src"
@@ -98,6 +108,9 @@ const
   maxErrors: Number,
   bgColor: String,
   baseColor: String,
+  fullWidth: Boolean,
+  label: String,
+  labelAlign: String,
 }),
 modelValue = computed(() => props.modelValue),
 emit = defineEmits(['update:modelValue']),
@@ -135,6 +148,7 @@ async function getData(value: string|FileList|File|undefined) {
       min-height: var(--sizes, var(--min-height));
     }
     
+
     .v-field {
       border-radius: var(--border-radius);
       border: var(--border);
@@ -145,11 +159,27 @@ async function getData(value: string|FileList|File|undefined) {
         padding: 0;
       }
 
-      &__clearable {
+      &__field > .v-label {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        font-size: 16px !important;
+      }
+
+      .v-label { opacity: 0 }
+    }
+
+    &--empty .v-field .v-label { opacity: 1 }
+
+
+    &.fullWidth {
+      .v-field__clearable {
         position: absolute;
         inset: 0;
       }
     }
+
 
     .v-img {
       width: var(--sizes, var(--width));

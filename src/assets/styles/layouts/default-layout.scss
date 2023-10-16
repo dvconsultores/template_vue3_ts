@@ -7,22 +7,12 @@
   // overflow: hidden;
 
   //- responsive font size -//
-  & > * {
-    font-size: var(--resizer);
-  }
-  .v-main {
-    & > * {
-      @include media(max, small) {
-        font-size: var(--resizer-mobile)
-      }
-    }
-  }
+  & > * { font-size: var(--resizer) }
 
-  // footer margin modifiable
-  & .with {
-    padding-block: calc(var(--h-navbar) + 20px) var(--h-footer, 80px) !important
-  }
-  & .without {
-    padding-block: calc(var(--h-navbar) + 20px) 0 !important
+  .v-main {
+
+    & > * {
+      @include media(max, small) { font-size: var(--resizer-mobile) }
+    }
   }
 }

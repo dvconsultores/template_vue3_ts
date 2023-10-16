@@ -12,15 +12,9 @@ const store = createStore({
     },
   },
   mutations: {
-    setProfile(state, profile) {
-      state.profile = profile
-    },
-    setDrawerState(state, value) {
-      state.drawer = value
-    },
-    setLoaderState(state, value) {
-      state.loader = value
-    },
+    setDrawer(state, value) { state.drawer = value },
+    setLoader(state, value) { state.loader = value },
+    setProfile(state, profile) { state.profile = profile },
   },
   actions: {
     // modalConnect() {

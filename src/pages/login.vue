@@ -1,8 +1,8 @@
 <template>
   <section id="login">
-    <img src="@/assets/sources/logos/logo.svg" style="width: min(450px, 100%)">
+    <img src="@/assets/sources/logos/logo.svg" class="w-100">
 
-    <v-form v-model="validForm">
+    <v-form v-model="validForm" class="w-100">
       <v-text-field
         v-model="dataLogin.email"
         variant="solo"
@@ -22,7 +22,7 @@
         placeholder="Contraseña"
         :type="showPassword ? 'text' : 'password'"
         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-        :rules="[rules.password]"
+        :rules="[globalRules.password]"
         @click:appendInner="showPassword = !showPassword"
         @keydown="(e: any) => {
           if (e.key !== 'Enter') return
@@ -61,9 +61,9 @@
 <script setup lang="ts">
 import '@/assets/styles/pages/login.scss'
 import variables from '@/mixins/variables';
+import { storageSecureCollection } from '@/plugins/vue3-storage-secure';
 import AuthApi from '@/repository/auth_api';
-import { Ref } from 'vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from "vue-toastification";
 import { useStorage } from 'vue3-storage-secure';
@@ -81,18 +81,14 @@ dataLogin = ref({
   email: '',
   password: '',
 }),
-rules = {
-  password: (v: string) => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{6,}$/.test(v)
-    || 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un caracter especial',
-},
 passwordInput: Ref<HTMLElement|null> = ref(null)
 
 
 onBeforeMount(() => {
-  if (storage?.getStorageSync("tokenAuth"))
-    storage.removeStorageSync("tokenAuth")
+  if (storage?.getSecureStorageSync(storageSecureCollection.tokenAuth))
+    storage.removeStorageSync(storageSecureCollection.tokenAuth)
 
-  const rmEmail = storage?.getStorageSync('rmEmail')
+  const rmEmail = storage?.getSecureStorageSync(storageSecureCollection.rememberEmail)
   if (rmEmail) {
     dataLogin.value.email = rmEmail
     rememberMe.value = true
@@ -107,14 +103,14 @@ async function handleLogin() {
   await AuthApi.signIn(dataLogin.value)
     .catch(() => { return isLoading.value = false })
 
-  if (!rememberMe.value) storage?.removeStorageSync('rmEmail')
-  else storage?.setStorageSync('rmEmail', dataLogin.value.email)
+  if (!rememberMe.value) storage?.removeStorageSync(storageSecureCollection.rememberEmail)
+  else storage?.setSecureStorageSync(storageSecureCollection.rememberEmail, dataLogin.value.email)
 
   toast.success('Sign in successful!')
-  router.push('/')
+  router.push({ name: 'Home' })
 }
 
 function handleRegister() {
-  router.push('/register')
+  router.push({ name: 'Register' })
 }
 </script>

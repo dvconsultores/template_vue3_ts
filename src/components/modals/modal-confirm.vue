@@ -1,26 +1,26 @@
 <template>
   <v-dialog
     v-model="model"
-    :fullscreen="fullscreen"
     :max-width="maxWidth"
     :activator="activator"
     :content-class="contentClass"
     :persistent="persistent"
+    :fullscreen="fullscreen"
   >
     <v-card :loading="loading">
-      <v-card-title :class="{'text-center': titleCenter}">
+      <v-card-title :class="[titleClass, titleCenter ? 'text-center' : '' ]">
         <slot name="title">{{ title }}</slot>
       </v-card-title>
 
       <v-divider v-if="showDivider"></v-divider>
 
-      <v-card-text>
+      <v-card-text :class="textClass">
         <slot>
-          <p>{{ content }}</p>
+          <p v-html="content" />
         </slot>
       </v-card-text>
 
-      <v-card-actions v-if="!hideActions">
+      <v-card-actions v-if="!hideActions" :class="{ actionsClass }">
         <v-btn
           class="bg-tertiary text-white flex-grow-1"
           @click="hasCancelEmit ? emit('cancel') : model = false"
@@ -54,6 +54,9 @@ defineProps({
     default: 'Cancelar'
   },
   contentClass: String,
+  titleClass: String,
+  textClass: String,
+  actionsClass: String,
   loading: Boolean,
   disabled: Boolean,
   showDivider: Boolean,
@@ -66,7 +69,7 @@ defineProps({
 })
 
 const
-  emit = defineEmits(['accept', 'close', 'cancel']),
+  emit = defineEmits(['open', 'accept', 'close', 'cancel']),
   instance = getCurrentInstance(),
 
 model = ref(false),
@@ -76,6 +79,7 @@ defineExpose({ model })
 
 
 watch(model, (value) => {
-  if (!value) emit('close')
+  if (value) emit('open')
+  else emit('close')
 })
 </script>

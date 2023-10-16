@@ -25,11 +25,11 @@ export default class FirebaseStorageApi {
   private static _dirImages = "images";
   private static _dirFiles = "files";
 
-  static upload(file: File, callback: (useStorage: ReturnType, fileType: _FileType) => {}) {
+  static upload(file: File, roomId: string, callback: (useStorage: ReturnType, fileType: _FileType) => {}) {
     const isImageType = /^image\//.test(file.type)
     const fileRef = storageRef(
       useFirebaseStorage(),
-      `${isImageType ? this._dirImages : this._dirFiles}/${file.name}`
+      `${isImageType ? this._dirImages : this._dirFiles}/${roomId}/${file.name}`
     )
 
     callback(useStorageFile(fileRef), isImageType ? 'image' : 'file')

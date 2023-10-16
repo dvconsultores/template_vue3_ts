@@ -8,13 +8,11 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig((userConfig) => {
-  const isProduction = process.env.NODE_ENV === 'production'
   const env = loadEnv(userConfig.mode, process.cwd(), '')
-
-  const baseUrl = isProduction ? env.BASE_URL : env.VITE_BASE_URL
+  // isProduction = process.env.NODE_ENV === 'production',
 
   return {
-    base: baseUrl,
+    base: env.VITE_BASE_URL,
     plugins: [
       vue({ 
         template: { transformAssetUrls }
@@ -27,7 +25,7 @@ export default defineConfig((userConfig) => {
     ],
     define: {
       'process.env': {
-        BASE_URL: baseUrl,
+        BASE_URL: env.VITE_BASE_URL,
         API_URL: env.VITE_API_URL,
       },
       __VUE_I18N_FULL_INSTALL__: true,

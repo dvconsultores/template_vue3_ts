@@ -27,7 +27,7 @@
       <v-list-item
         v-for="(item, i) in data" :key="i"
         :title="item.name"
-        @click="item.to ? router.push(item.to) : null"
+        @click="router.push({ name: item.to })"
         class="text-white"
       >
         <template #prepend>
@@ -58,8 +58,8 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from 'vuex'
-import { useRouter, RouteLocationRaw } from 'vue-router'
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify/lib/framework.mjs'
 import AuthApi from '@/repository/auth_api';
 const
@@ -67,21 +67,19 @@ const
   store = useStore(),
   { mobile } = useDisplay(),
 
-data: {icon: string, name: string, to: RouteLocationRaw|null}[] = [
+data = [
   {
     icon: "mdi-currency-usd",
     name: "Mi perfil",
-    to: "/profile"
   },
   {
     icon: "mdi-home-outline",
     name: "Dashboard",
-    to: "/"
+    to: "Home"
   },
   {
     icon: "mdi-file-document-outline",
     name: "Mis casos",
-    to: null
   },
 ]
 </script>
@@ -91,9 +89,7 @@ data: {icon: string, name: string, to: RouteLocationRaw|null}[] = [
   background-image: linear-gradient(#0b3f6b, #2a8ada);
 
   .v-list-item {
-    &-title {
-      font-size: 15px;
-    }
+    &-title { font-size: 15px }
   }
 }
 </style>

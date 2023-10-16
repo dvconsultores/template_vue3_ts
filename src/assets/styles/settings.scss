@@ -7,12 +7,14 @@
 @use 'vuetify/settings'; /* with (
 ); */
 
-
 //---------------------------------------------------------------------------------------------//
 //?========== defaults config classes ==========//
 //---------------------------------------------------------------------------------------------//
-.padless-inside > * {
-  padding: 0;
+.padless-inside > * { padding: 0 }
+
+.limit-overlay {
+  max-width: max-content !important;
+  min-width: max-content !important;
 }
 
 .progress-inside .v-progress-circular {
@@ -44,16 +46,59 @@
 //---------------------------------------------------------------------------------------------//
 //?========== direct settings ==========//
 //---------------------------------------------------------------------------------------------//
-.v-otp-input {
-  .v-field--focused .v-field__outline * {
-    border-color: vars.$primary;
+.v-select__content {
+  border: 1px solid vars.$primary;
+  border-radius: 12px;
+}
+
+.v-input:not(.not) {
+  .v-field {
+    border-radius: 12px;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.3);
   }
+
+  &:not(.v-textarea ) .v-field__input {
+    align-content: center;
+    padding-block: 0;
+  }
+
+  input {
+    font-size: 15px;
+    height: 100%;
+  }
+}
+
+.v-otp-input {
+
+  .v-field {
+    border-radius: 15px;
+    border: 1.5px solid vars.$primary;
+  }
+
+  .v-field--focused .v-field__outline * { border-color: vars.$primary }
 }
 
 .v-img {
   img {
     border: var(--border, initial);
     border-radius: var(--border-radius, initial);
+  }
+}
+
+.v-table {
+  // border-radius: 8px;
+  
+  .v-data-table-footer {
+    gap: 20px;
+    margin-top: 10px;
+    padding-inline: 24px;
+    padding-bottom: 12px;
+
+    // &__info, &__pagination { display: none !important }
+
+    &__items-per-page { padding-right: 0 }
+
+    // .v-pagination button {border-radius: 8px }
   }
 }
 
@@ -66,8 +111,6 @@
       padding: 10px 20px;
       border-radius: 15px;
 
-      .v-card-title { padding: 10px 0 }
-      .v-card-text { padding: 10px 0 !important }
       .v-card-actions {
         padding: 0;
         gap: 5px;
