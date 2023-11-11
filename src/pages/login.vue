@@ -100,14 +100,18 @@ async function handleLogin() {
   if (isLoading.value || !validForm.value) return
   isLoading.value = true
 
-  await AuthApi.signIn(dataLogin.value)
-    .catch(() => { return isLoading.value = false })
+  try {
+    await AuthApi.signIn(dataLogin.value)
 
-  if (!rememberMe.value) storage?.removeStorageSync(storageSecureCollection.rememberEmail)
-  else storage?.setSecureStorageSync(storageSecureCollection.rememberEmail, dataLogin.value.email)
+    if (!rememberMe.value) storage?.removeStorageSync(storageSecureCollection.rememberEmail)
+    else storage?.setSecureStorageSync(storageSecureCollection.rememberEmail, dataLogin.value.email)
 
-  toast.success('Sign in successful!')
-  router.push({ name: 'Home' })
+    toast.success('Sign in successful!')
+    router.push({ name: 'Home' })
+  } catch (error) {
+    isLoading.value = false
+    toast.error(error as string)
+  }
 }
 
 function handleRegister() {
