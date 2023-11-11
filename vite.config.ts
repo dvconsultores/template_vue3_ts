@@ -27,6 +27,7 @@ export default defineConfig((userConfig) => {
       'process.env': {
         BASE_URL: env.VITE_BASE_URL,
         API_URL: env.VITE_API_URL,
+        SECURE_STORAGE_NAME_SPACE: env.VITE_SECURE_STORAGE_NAME_SPACE,
       },
       __VUE_I18N_FULL_INSTALL__: true,
       __VUE_I18N_LEGACY_API__: false,
