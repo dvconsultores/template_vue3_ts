@@ -1,8 +1,5 @@
-/**
- * main.ts
- *
- * Bootstraps Vuetify and other plugins then mounts the App`
- */
+// styles
+import '@/assets/styles/main.scss'
 
 // Components
 import App from './app.vue'
