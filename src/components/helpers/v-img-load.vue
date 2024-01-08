@@ -28,7 +28,7 @@
   >
     <template v-if="!lazySrc" #placeholder>
       <v-skeleton-loader
-        :boilerplate="stopLoading"
+        :boilerplate="stopLoading || !src?.length"
         :color="colorLoader"
         width="100%"
         height="100%"
