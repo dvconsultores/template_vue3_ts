@@ -4,11 +4,11 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 // Utilities
 import { defineConfig, loadEnv } from 'vite'
-import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig((userConfig) => {
-  const env = loadEnv(userConfig.mode, process.cwd(), '')
+  const path = require('path'),
+  env = loadEnv(userConfig.mode, process.cwd(), '')
   // isProduction = process.env.NODE_ENV === 'production',
 
   return {
@@ -25,6 +25,7 @@ export default defineConfig((userConfig) => {
     ],
     define: {
       'process.env': {
+        NODE_ENV: env.NODE_ENV,
         BASE_URL: env.VITE_BASE_URL,
         API_URL: env.VITE_API_URL,
         SECURE_STORAGE_NAME_SPACE: env.VITE_SECURE_STORAGE_NAME_SPACE,
@@ -38,7 +39,7 @@ export default defineConfig((userConfig) => {
     },
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': path.resolve(__dirname, './src'),
       },
       extensions: [
         '.js',
