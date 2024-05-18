@@ -44,7 +44,7 @@
       </template>
 
       <template #selection>
-        <v-chip class="v-img-input__length-chip">{{ formatBytes(model[0].size) }}</v-chip>
+        <v-chip rounded="100px" class="v-img-input__length-chip">{{ formatBytes(model[0].size) }}</v-chip>
 
         <v-img
           :src="src"
@@ -147,7 +147,6 @@ async function getData(value: string|FileList|File|undefined) {
     bottom: 5px !important;
     z-index: 2;
     background-color: hsl(0, 0%, 96%) !important;
-    border-radius: 100px !important;
 
     .v-chip__underlay { opacity: .3 !important }
     .v-chip__content { color: #000 !important }
@@ -163,7 +162,6 @@ async function getData(value: string|FileList|File|undefined) {
       max-height: var(--sizes, var(--max-height));
       min-height: var(--sizes, var(--min-height));
     }
-    
 
     .v-field {
       border-radius: var(--border-radius);
@@ -195,7 +193,6 @@ async function getData(value: string|FileList|File|undefined) {
         inset: 0;
       }
     }
-
 
     .v-img {
       width: var(--sizes, var(--width));
