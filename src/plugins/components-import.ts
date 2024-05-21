@@ -6,12 +6,13 @@ import VImgInput from '@/components/helpers/v-img-input.vue'
 import VAvatarUpload from '@/components/helpers/v-avatar-upload.vue'
 
 // ? imported from external
-import { VOtpInput, VDataTable, VDataTableServer, VStepper, VDatePicker } from 'vuetify/lib/labs/components.mjs'
+import { VOtpInput, VSkeletonLoader, VDataTable, VDataTableServer, VStepper, VDatePicker } from 'vuetify/lib/labs/components.mjs'
 import VueApexCharts from "vue3-apexcharts"
 import VueRecaptcha from 'vue3-recaptcha2'
 
 export default {
   VOtpInput,
+  VSkeletonLoader,
   VDataTable,
   VDataTableServer,
   VStepper,
