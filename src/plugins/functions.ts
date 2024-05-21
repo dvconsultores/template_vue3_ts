@@ -1,6 +1,8 @@
+import variables from '@/mixins/variables';
 import store from '@/store'
 import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
+const { defaultMaxDecimals } = variables
 
 export function mapRanged(value: number, {fromMin, fromMax, toMin, toMax, invert = false}: {
   fromMin: number,
@@ -187,4 +189,46 @@ export function delayed(timeout: number, callback: Function) {
       reject(error);
     }
   });
+}
+
+/// filtering input formatter
+export function filteringInputformatter(event: any, allowedRegExp: RegExp) {
+  const input = event.target
+  let value = input.value
+
+  value = value.split('').filter((char: string) => char.match(allowedRegExp)).join('');
+
+  input.value = value;
+  input.blur()
+  input.focus()
+
+  return value
+}
+
+/// restringed input formatter
+export function restringedInputFormatter(event: any, blacklist: string[]) {
+  const input = event.target;
+  let value = input.value;
+
+  value = value.split('').filter((char: string) => !blacklist.includes(char)).join('');
+
+  input.value = value;
+  input.blur();
+  input.focus();
+
+  return value;
+}
+
+/// input formatter
+export function decimalInputformatter(event: any, maxDecimals: number = defaultMaxDecimals) {
+  const input = event.target
+  let value = input.value
+
+  if (!new RegExp(`^(\\d+([.,]\\d{0,${maxDecimals}})?)?$`).test(value)) value = value.slice(0, -1)
+  value = value.split('.').join(',');
+
+  input.blur()
+  input.focus()
+
+  return value
 }
