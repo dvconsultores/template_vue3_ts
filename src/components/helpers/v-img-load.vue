@@ -72,12 +72,12 @@ defineProps({
 <style lang="scss">
 .v-img-load {
   border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   
   .v-img__img {
     padding: var(--padding);
     border-radius: var(--border-radius);
     border: var(--border);
-    box-shadow: var(--box-shadow);
     background-color: var(--background-color);
   }
 
