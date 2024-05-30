@@ -28,6 +28,7 @@
         --border: ${border};
         --label-align: ${labelAlign};
       `"
+      @click:clear="emit('click:clear')"
       @change="(event: any) => {
         const files = event.target.files
 
@@ -115,7 +116,7 @@ const
   labelAlign: String,
 }),
 modelValue = computed(() => props.modelValue),
-emit = defineEmits(['update:modelValue']),
+emit = defineEmits(['update:modelValue', 'click:clear']),
 
 model = ref(),
 src = ref()
