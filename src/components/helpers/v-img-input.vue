@@ -43,8 +43,8 @@
         <slot name="append" />
       </template>
 
-      <template #selection>
-        <v-chip rounded="100px" class="v-img-input__length-chip">{{ formatBytes(model[0].size) }}</v-chip>
+      <template #selection="{ totalBytesReadable }">
+        <v-chip rounded="100px" class="v-img-input__length-chip">{{ totalBytesReadable }}</v-chip>
 
         <v-img
           :src="src"
@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onBeforeMount, computed } from 'vue'
-import { getUrlFromFile, getFileFromUrl, isOnlyDigits, formatBytes } from '@/plugins/functions'
+import { getUrlFromFile, getFileFromUrl, isOnlyDigits } from '@/plugins/functions'
 
 const
   props = defineProps({
@@ -164,7 +164,7 @@ async function getData(value: string|FileList|File|undefined) {
     }
 
     .v-field {
-      border-radius: var(--border-radius);
+      border-radius: var(--border-radius) !important;
       border: var(--border);
       padding: 0;
 
