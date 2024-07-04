@@ -16,12 +16,13 @@ const light = {
     background: '#FFFFFF',
     surface: '#FFFFFF',
     foreground: '#000000',
+    'foreground-2': '#4E444B',
     label: '#6e6e6e',
 
     primary: '#e15517',
-    'primary-darken-1': '#3700B3',
+    'primary-darken': '#3700B3',
     secondary: '#02a6d0',
-    'secondary-darken-1': '#018786',
+    'secondary-darken': '#018786',
     accent: '#162c59',
 
     ...defaultColors,

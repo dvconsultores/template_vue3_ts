@@ -2,9 +2,9 @@
 
 //========== Variables ==========//
 :root {
-  //------- fonts -------//
+  //------- Fonts -------//
   --font-1: 'Ubuntu', sans-serif;
-  //------- sizes -------//
+  //------- Sizes -------//
   --resizer: clamp(12px, 1vw, 16px);
   --resizer-mobile: clamp(10px, 1.5vw, 12px);
   --margin-global: 9em; // too can use 6em
@@ -14,19 +14,21 @@
   --h-navbar: 100px;
   @include media(max, small) {--h-navbar: 80px}
   --w-scroll: 4px;
-  //------- shadows -------//
-  --shadow-filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.3));
-  --shadow-card: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  --shadow-btn: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  //------- Elevations -------//
+  --elevation-1: 0px 1px 2px 0px rgb(0, 0, 0, .25);
+  --elevation-2: 0px 1px 4px 0px rgb(128, 116, 123, .25);
 }
 
 
 //========== Colors ==========//
 $bg-app:            rgb(var(--v-theme-background-app));
 $primary:           rgb(var(--v-theme-primary));
+$primary-darken:    rgb(var(--v-theme-primary-darken));
 $secondary:         rgb(var(--v-theme-secondary));
+$secondary-darken:  rgb(var(--v-theme-secondary-darken));
 $accent:            rgb(var(--v-theme-accent));
 $foreground:        rgb(var(--v-theme-foreground));
+$foreground-2:      rgb(var(--v-theme-foreground-2));
 $surface:           rgb(var(--v-theme-surface));
 $error:             rgb(var(--v-theme-error));
 $warning:           rgb(var(--v-theme-warning));
@@ -35,28 +37,27 @@ $label:             rgb(var(--v-theme-label));
 $text-grey:         rgb(var(--v-theme-text-grey));
 $line:              rgba(var(--v-theme-foreground), .6);
 
-$btn:           #EAE823;
-// $btn-pressed:   #AD0FD5;
-// $btn-inactive:  #AD0FD5;
-$text-btn:      #000000;
-$card:          hsl(210, 48%, 13%, .45);
-$gradient:      linear-gradient(to right top,#356D74,#2A505C,#21394A,#1A293D,#172035,#161D33,#161E34,#192539,#1E3143,#244251,#2D5862,#387378,#449492,#53B9B1,#63E2D2);
 $hover:         hsl(288 90% 10%);
-$card-title-color:  $label;
+
+//========== Elevations ==========//
+$elevation-1: var(--elevation-1);
+$elevation-2: var(--elevation-2);
 
 //========== Layout ==========//
-$content-padding:                           24px;
-$shadow-filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.3));
+$content-padding: 24px;
 
 //========== Card ==========//
-$card-shadow: 0 3px 11px 0 #111011, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A;
-$shadow-card: 0px 4px 4px rgba(0, 0, 0, 0.25);
 $border-card: 20px;
 
 //========== Buttons ==========//
-$button-shadow: 0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A;
-$shadow-btn: 0px 4px 4px rgba(0, 0, 0, 0.25);
 $border-btn: 10px;
+
+//========== Hover ==========//
+$ease: cubic-bezier(0.23, 1, 0.32, 1);
+$ease-return: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+$ease-slide: cubic-bezier(0.4, 0.1, 0.7, 0.95);
+$skew-right: skewX(12deg) translateX(1px);
+$skew-left: skewX(-12deg) translateX(-1px);
 
 //========== boxes ==========//
 $clip-path: polygon(
@@ -94,17 +95,11 @@ $clip-path-bottom: polygon(
   0% calc(100% - var(--c-size))
 );
 
-//========== Hover ==========//
-$ease: cubic-bezier(0.23, 1, 0.32, 1);
-$ease-return: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-$ease-slide: cubic-bezier(0.4, 0.1, 0.7, 0.95);
-$skew-right: skewX(12deg) translateX(1px);
-$skew-left: skewX(-12deg) translateX(-1px);
-
-
 //========== custome classes ==========//
-.flr {filter: invert(100%) !important}
-.flr_inv {filter: invert(0%) !important}
+.flr { filter: invert(100%) !important }
+.flr_inv { filter: invert(0%) !important }
+.custom-elevation-1 { box-shadow: $elevation-1 !important; }
+.custom-elevation-2 { box-shadow: $elevation-2 !important; }
 
 //========== other global vars ==========//
 
