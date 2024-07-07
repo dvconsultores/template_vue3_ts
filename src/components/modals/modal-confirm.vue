@@ -23,13 +23,13 @@
       <v-card-actions v-if="!hideActions" :class="{ actionsClass }">
         <v-btn
           class="bg-tertiary text-white flex-grow-1"
-          @click="hasCancelEmit ? emit('cancel') : model = false"
+          @click="hasCancelEmit ? emit('cancel', modelParameter) : model = false"
         >{{ cancelButtonText }}</v-btn>
 
         <v-btn
           class="bg-primary text-white flex-grow-1"
           :disabled="disabled || loading"
-          @click="emit('accept')"
+          @click="emit('accept', modelParameter)"
         >{{ confirmButtonText }}</v-btn>
       </v-card-actions>
     </v-card>
@@ -47,11 +47,11 @@ defineProps({
   content: String,
   confirmButtonText: {
     type: String,
-    default: 'Aceptar'
+    default: 'Accept'
   },
   cancelButtonText: {
     type: String,
-    default: 'Cancelar'
+    default: 'Cancel'
   },
   contentClass: String,
   titleClass: String,
@@ -73,13 +73,19 @@ const
   instance = getCurrentInstance(),
 
 model = ref(false),
+modelParameter = ref(null),
 hasCancelEmit = !!instance?.vnode.props?.onCancel
 
-defineExpose({ model })
+function showModal(parameter: any) {
+  modelParameter.value = parameter
+  model.value = true
+}
+
+defineExpose({ model, showModal })
 
 
 watch(model, (value) => {
-  if (value) emit('open')
-  else emit('close')
+  if (value) emit('open', modelParameter.value)
+  else emit('close', modelParameter.value)
 })
 </script>
