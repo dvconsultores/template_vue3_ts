@@ -7,12 +7,12 @@
     :persistent="persistent"
     :fullscreen="fullscreen"
   >
-    <v-card :loading="loading">
+    <v-card :loading="loading" class="pa-9">
       <v-btn size="25" variant="text" class="close-button text-foreground ml-auto" @click="model = false">
         <v-icon icon="mdi-close" size="16" />
       </v-btn>
 
-      <v-card-title :class="[titleClass, titleCenter ? 'text-center' : '' ]">
+      <v-card-title :class="[titleClass, titleCenter ? 'text-center' : '' ]" style="white-space: initial; line-height: 1.1;">
         <slot name="title">{{ title }}</slot>
       </v-card-title>
 
@@ -24,18 +24,24 @@
         </slot>
       </v-card-text>
 
-      <v-card-actions v-if="!hideActions" :class="{ actionsClass }">
-        <v-btn
-          class="bg-tertiary text-white flex-grow-1"
-          @click="hasCancelEmit ? emit('cancel', modelParameter) : model = false"
-        >{{ cancelButtonText }}</v-btn>
+      <slot name="actions">
+        <div v-if="!hideActions" :class="['flex-center', actionsClass]" style="gap: 20px;">
+          <v-btn
+            width="143"
+            height="44"
+            variant="outlined"
+            @click="hasCancelEmit ? emit('cancel', modelParameter) : model = false"
+          >{{ cancelButtonText }}</v-btn>
 
-        <v-btn
-          class="bg-primary text-white flex-grow-1"
-          :disabled="disabled || loading"
-          @click="emit('confirm', modelParameter)"
-        >{{ confirmButtonText }}</v-btn>
-      </v-card-actions>
+          <v-btn
+            width="143"
+            height="44"
+            class="bg-primary text-white"
+            :disabled="disabled || loading"
+            @click="emit('confirm', modelParameter)"
+          >{{ confirmButtonText }}</v-btn>
+        </div>
+      </slot>
     </v-card>
   </v-dialog>
 </template>
@@ -68,7 +74,7 @@ defineProps({
   titleCenter: Boolean,
   maxWidth: {
     type: String,
-    default: "350"
+    default: "461"
   },
   hideActions: Boolean,
 })
@@ -96,9 +102,13 @@ watch(model, (value) => {
 </script>
 
 <style lang="scss">
+@use "@/assets/styles/utils/variables.scss" as vars;
+
 .custom-modal {
   > .v-card {
     position: relative;
+    border: 1px solid vars.$primary;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25) !important;
   }
 
   .close-button {
