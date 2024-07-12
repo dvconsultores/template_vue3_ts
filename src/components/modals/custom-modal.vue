@@ -13,18 +13,18 @@
       </v-btn>
 
       <v-card-title :class="[titleClass, titleCenter ? 'text-center' : '' ]" style="white-space: initial; line-height: 1.1;">
-        <slot name="title">{{ title }}</slot>
+        <slot name="title" :parameter="modelParameter">{{ title }}</slot>
       </v-card-title>
 
       <v-divider v-if="showDivider"></v-divider>
 
       <v-card-text :class="['pt-0 pb-4', textClass, contentCenter ? 'text-center' : '' ]">
-        <slot>
+        <slot :parameter="modelParameter">
           <p v-html="content" class="mb-0" />
         </slot>
       </v-card-text>
 
-      <slot name="actions">
+      <slot name="actions" :parameter="modelParameter">
         <div v-if="!hideActions" :class="['flex-center', actionsClass]" style="gap: 20px;">
           <v-btn
             width="143"
