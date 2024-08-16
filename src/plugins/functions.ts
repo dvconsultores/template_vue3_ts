@@ -4,13 +4,15 @@ import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
 const { defaultMaxDecimals } = variables
 
-export function mapRanged(value: number, {fromMin, fromMax, toMin, toMax, invert = false}: {
+export function mapRanged(value: number, {fromMin, fromMax, toMin, toMax, invert}: {
   fromMin: number,
   fromMax: number,
   toMin: number,
   toMax: number,
   invert: boolean
 }) {
+  invert ??= false
+
   let mappedValue =
       ((value - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin;
 
@@ -65,7 +67,9 @@ export function isOnlyDigits(value: string|number|undefined): boolean {
   return regex.test(value.toString())
 }
 
-export function toCssVal(value: any, unit = 'px'): string {
+export function toCssVal(value: any, unit: string): string {
+  unit ||= 'px'
+
   // helper
   function setValue(val: string|number|Array<number|string>, i: number|null) {
     if (typeof val === 'string') return val
@@ -110,7 +114,9 @@ export function getUrlFromFile(file: File) {
   return URL.createObjectURL(file)
 }
 
-export async function getFileFromUrl(url: string, type = 'image/jpeg') {
+export async function getFileFromUrl(url: string, type: string) {
+  type ||= 'image/jpeg'
+
   const
     response = await fetch(url),
     blob = await response.blob(),
@@ -146,7 +152,9 @@ export async function getImageSize(file: File): Promise<{ width: number, height:
   });
 }
 
-export function formatBytes(bytes: number, decimals = 2) {
+export function formatBytes(bytes: number, decimals: number) {
+  decimals ||= 2
+
   if (bytes === 0) return "0 B";
   const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
@@ -220,7 +228,9 @@ export function restringedInputFormatter(event: any, blacklist: string[]) {
 }
 
 /// input formatter
-export function decimalInputformatter(event: any, maxDecimals: number = defaultMaxDecimals) {
+export function decimalInputformatter(event: any, maxDecimals: number) {
+  maxDecimals ||= defaultMaxDecimals
+
   const input = event.target
   let value = input.value
 
