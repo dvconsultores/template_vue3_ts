@@ -1,8 +1,9 @@
 import variables from '@/mixins/variables';
 import store from '@/store'
+import imageCompression, { Options } from 'browser-image-compression';
 import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
-const { defaultMaxDecimals } = variables
+const { defaultMaxDecimals, defaultLocale } = variables
 
 export function mapRanged(value: number, {fromMin, fromMax, toMin, toMax, invert}: {
   fromMin: number,
@@ -187,6 +188,161 @@ export function hourFormatter(time: number) {
   if (seconds > 0) result += seconds + "s"
 
   return result;
+}
+
+export function showMetaMapFlow(id: string) {
+  const metadata = JSON.stringify({"id": id}),
+  url = `https://signup.getmati.com/?merchantToken=${
+    process.env.META_MAP_CLIENT_ID
+  }&flowId=${
+    process.env.META_MAP_FLOW_ID
+  }&metadata=${metadata}&redirect=${window.location.origin}/profile?success=true&target=_self`
+
+  window.open(url, '_self')
+}
+
+export function commasToDots(value: string) {
+  if (!value.includes(",")) return value;
+
+  let splitted = value.split(",");
+  if (splitted.length > 2) {
+    const intire = splitted[0];
+    splitted = splitted.filter((element) => element !== "" && element !== intire);
+    return `${intire},${splitted.join("")}`;
+  } else {
+    return splitted.join(".");
+  }
+}
+
+export function maxDecimals(value: string|number, max: number) {
+  max ||= defaultMaxDecimals
+
+  if (!value || value === '0') return 0
+  else if (Number(value) % 1 == 0) return value
+
+  const splitted = value.toString().split("."),
+    decimalsFiltered = splitted[1].substring(0, splitted[1].length > max ? max : splitted[1].length);
+
+  splitted.pop();
+  splitted.push(decimalsFiltered);
+  return parseFloat(splitted.join("."));
+}
+
+export function getDecimalSeparator(locale: string) {
+  const formatter = new Intl.NumberFormat(locale),
+    testNumber = 1.1,
+    formatedNumber = formatter.format(testNumber),
+    separator = formatedNumber[1];
+
+  return separator;
+}
+
+export function formatAmount(value: string|number, {
+  symbol,
+  symbolSuffixed = true,
+  currency,
+  locale = defaultLocale,
+  maxDecimals = defaultMaxDecimals,
+  minimumFractionDigits = defaultMaxDecimals,
+  compact = false,
+  removeThousandSeparator
+}: {
+  symbol: string,
+  symbolSuffixed: boolean,
+  currency: string,
+  locale: string,
+  maxDecimals: number,
+  minimumFractionDigits: number,
+  compact: boolean,
+  removeThousandSeparator: boolean
+}) {
+  // Parse the string as a number. If parsing fails, use 0.0.
+  value = parseFloat(Number(value).toString().replace(",", "")) || 0.0;
+
+  // Use the Intl.NumberFormat API to format the value.
+  let formatter
+
+  if (compact) {
+    formatter = new Intl.NumberFormat(
+      'en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1,
+      notation: 'compact',
+      compactDisplay: 'short',
+    });
+  } else if (currency) {
+    formatter = new Intl.NumberFormat(
+      locale, {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: minimumFractionDigits,
+      maximumFractionDigits: maxDecimals,
+    });
+  } else {
+    formatter = new Intl.NumberFormat(
+      locale, {
+      minimumFractionDigits: minimumFractionDigits,
+      maximumFractionDigits: maxDecimals,
+    });
+  }
+
+  let formattedValue = formatter.format(value).trim();
+
+  if (symbol) {
+    formattedValue = formattedValue.replace(/[^0-9.,\s]+/g, symbol)
+
+    if (symbolSuffixed) {
+      formattedValue = `${formattedValue}${symbol}`
+    } else {
+      formattedValue = `${symbol}${formattedValue}`
+    }
+  }
+
+  if (removeThousandSeparator) {
+    const thousandSeparator = getDecimalSeparator(locale) === ',' ? '.' : ','
+    formattedValue = formattedValue.split(thousandSeparator).join('')
+  }
+
+  return formattedValue
+}
+
+export function unformatAmount(formattedValue: string, {
+  symbol,
+  locale = defaultLocale,
+  symbolSuffixed = true,
+}: {
+  symbol: string,
+  locale: string,
+  symbolSuffixed: boolean,
+}) {
+  if (!formattedValue) return 0
+
+  if (symbol && symbolSuffixed) {
+    formattedValue = formattedValue.slice(0, -symbol.length)
+  }
+  else if (symbol) {
+    formattedValue = formattedValue.slice(symbol.length)
+  }
+
+  if (getDecimalSeparator(locale) === ',') {
+    formattedValue = formattedValue.replaceAll('.', '')
+    formattedValue = formattedValue.replace(',', '.')
+  } else {
+    formattedValue = formattedValue.replaceAll(',', '')
+  }
+
+  return parseFloat(formattedValue)
+}
+
+export async function fileCompression(file: File, options: Options) {
+  const blob = await imageCompression(file, options || {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true,
+    initialQuality: 0.7,
+  })
+
+  return new File([blob], blob.name)
 }
 
 export function delayed(timeout: number, callback: Function) {
