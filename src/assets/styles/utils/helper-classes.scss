@@ -73,7 +73,6 @@
   --min-h: 36px;
   --g: 5px;
   --br: 30px;
-  &:has(> .v-btn__content > :only-child) {--br: 10px};
   --bs: 0px 4px 4px rgba(0, 0, 0, 0.25);
   --fs: max(16px, 1em);
   --fw: 300;
@@ -81,7 +80,7 @@
   --lh: 1;
   --f: initial;
   --t: initial;
-  
+
   background: var(--bg) !important;
   color: var(--c) !important;
   box-shadow: var(--bs) !important;
@@ -113,6 +112,8 @@
     gap: var(--g);
   }
 }
+
+.btn:has(> .v-btn__content > :only-child) {--br: 10px}
 
 //*- cards -//
 .card {
