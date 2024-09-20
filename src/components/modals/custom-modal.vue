@@ -18,9 +18,9 @@
 
       <v-divider v-if="showDivider"></v-divider>
 
-      <v-card-text :class="['pt-0 pb-4', textClass, contentCenter ? 'text-center' : '' ]">
+      <v-card-text :class="['pt-0 pb-4', textClass, textCenter ? 'text-center' : '' ]">
         <slot :parameter="modelParameter">
-          <p v-html="content" class="mb-0" />
+          <p v-html="text" class="mb-0" />
         </slot>
       </v-card-text>
 
@@ -55,8 +55,8 @@ defineProps({
   activator: String,
   persistent: Boolean,
   title: String,
-  contentCenter: Boolean,
-  content: String,
+  textCenter: Boolean,
+  text: String,
   confirmButtonText: {
     type: String,
     default: 'Aceptar'
@@ -93,7 +93,11 @@ function showModal(parameter) {
   model.value = true
 }
 
-defineExpose({ model, showModal })
+function closeModal() {
+  model.value = false
+}
+
+defineExpose({ model, showModal, closeModal })
 
 
 watch(model, (value) => {
