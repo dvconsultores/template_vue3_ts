@@ -30,13 +30,14 @@
             width="143"
             height="44"
             variant="outlined"
+            class="btn"
             @click="hasCancelEmit ? emit('cancel', modelParameter) : model = false"
           >{{ cancelButtonText }}</v-btn>
 
           <v-btn
             width="143"
             height="44"
-            class="bg-primary text-white"
+            class="btn bg-primary text-white"
             :disabled="disabled || loading"
             @click="emit('confirm', modelParameter)"
           >{{ confirmButtonText }}</v-btn>

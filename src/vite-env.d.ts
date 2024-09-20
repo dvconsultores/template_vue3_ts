@@ -11,9 +11,11 @@ import CustomModal from '@/components/modals/custom-modal.vue'
 import VImgLoad from '@/components/helpers/v-img-load.vue'
 import VImgInput from '@/components/helpers/v-img-input.vue'
 import VAvatarUpload from '@/components/helpers/v-avatar-upload.vue'
+import Navbar from '@/components/navbar.vue'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Navbar: typeof Navbar,
     FullScreen: typeof FullScreen,
     CustomModal: typeof CustomModal,
     VImgLoad: typeof VImgLoad,

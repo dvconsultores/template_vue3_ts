@@ -1,4 +1,6 @@
 <template>
+  <Navbar title="navbar" />
+
   <div id="home" class="fill-height flex-center">
     <v-responsive class="align-center text-center pb-4">
       <v-img height="100" :src="logo" />
@@ -8,7 +10,7 @@
       <h2 v-font="[16, 3.5]" class="py-5">{{name}}</h2>
 
       <v-btn
-        class="bg-primary text-white"
+        class="btn bg-primary text-white"
         rounded @click="anything"
       >Do Anything!</v-btn>
     </v-responsive>

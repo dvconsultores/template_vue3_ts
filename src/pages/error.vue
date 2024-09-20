@@ -2,7 +2,7 @@
   <section id="error-page" class="flex-column-center">
     <h1 class="mb-0 wbol">{{error.title ?? $t("error.title")}}</h1>
     <span class="wbold">{{error.description ?? $t("error.description")}}</span>
-    <v-btn :to="error.to" class="wbold text-white">{{error.button ?? $t("error.button")}}</v-btn>
+    <v-btn :to="error.to" class="btn wbold text-white">{{error.button ?? $t("error.button")}}</v-btn>
   </section>
 </template>
 

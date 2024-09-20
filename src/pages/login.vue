@@ -44,14 +44,14 @@
       </div>
 
       <v-btn
-        class="my-2 bg-primary"
+        class="btn my-2 bg-primary"
         :disabled="!validForm"
         :loading="isLoading"
         @click="handleLogin()"
       >Iniciar Sesión</v-btn>
       
       <v-btn
-        class="bg-secondary"
+        class="btn bg-secondary"
         @click="handleRegister()"
       >Registrarse</v-btn>
     </v-form>
